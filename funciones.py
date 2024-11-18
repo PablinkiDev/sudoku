@@ -113,5 +113,6 @@ def validar_colisiones_menu(evento, opciones, estado):
             elif opcion["texto"] == "Salir":
                 pygame.quit()
                 quit()
+                
     return estado
     
