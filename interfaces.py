@@ -3,10 +3,6 @@ from constantes import *
 from imagenes import cargar_imagen, DICCIONARIO_IMAGENES
 from logica_sudoku import inicializar_tablero_sudoku
 
-
-
-
-
 # fuente = pygame.font.Font(None, 40)
 
 # facil = fuente.render("Facil", True, "white")
@@ -30,6 +26,9 @@ from logica_sudoku import inicializar_tablero_sudoku
 
             
 def pantalla_menu(eventos, estado_juego):
+    """
+    Esta funcion se encarga de dibujar la pantalla del menu.
+    """
     estado_juego['pantalla'].blit(cargar_imagen("img/fondo.jpg"), (0, 0))
     fuente = pygame.font.Font(None, 40)
     dibujar_botones_menu(estado_juego['pantalla'], fuente)
@@ -68,6 +67,12 @@ def pantalla_menu(eventos, estado_juego):
     pygame.display.flip()
 
 def dibujar_botones_menu(pantalla, fuente):
+    """
+    Esta funcion se encarga de dibujar los botones en el menu.
+    Recibe: pantalla: Pantalla inicializada en Pygame a la que se dibujara.
+            fuente: Fuente que tendran los textos de los botones
+    No retorna nada
+    """
         for opcion in OPCIONES_MENU:
             x, y = opcion["posicion"]
             texto = fuente.render(opcion["texto"], True, BLANCO)
@@ -80,10 +85,13 @@ def dibujar_botones_menu(pantalla, fuente):
             pantalla.blit(texto, texto_rect.topleft)
 
 def pantalla_juego(estado_juego:dict):
+    """
+    Esta funcion se encarga de dibujar la pantalla del juego.
+    Recibe: estado_juego(dict): Diccionario con todos los elementos importantes del juego.
+    No retorna nada.
+    """
     estado_juego['pantalla'].blit(cargar_imagen("img\ingame-fondo.jpg"), (0, 0))
     errores = str(estado_juego['errores'])
-    
-    
     
     dibujar_temporizador(estado_juego)
     dibujar_tablero(estado_juego)
@@ -99,6 +107,11 @@ def pantalla_juego(estado_juego:dict):
     pygame.display.flip()
 
 def pantalla_puntajes(estado_juego:dict):
+    """
+    Esta funcion se encarga de dibujar la pantalla de puntajes.
+    Recibe: estado_juego(dict): Diccionario con todos los elementos importantes del juego.
+    No retorna nada
+    """
     estado_juego['pantalla'].fill("lightblue")
     fuente = pygame.font.SysFont(None, 74)
     texto = fuente.render("Pantalla de Puntajes", True, "black")
@@ -106,6 +119,11 @@ def pantalla_puntajes(estado_juego:dict):
     pygame.display.flip()
 
 def dibujar_tablero(estado_juego:dict):
+    """
+    Esta funcion se encarga de dibujar el tablero del sudoku durante la pantalla del juego.
+    Recibe: estado_juego(dict): Diccionario con todos los datos importantes del juego.
+    No tiene retorn
+    """
     fuente = pygame.font.SysFont(None, 32)
     cell_size = 60
     
@@ -139,6 +157,11 @@ def dibujar_tablero(estado_juego:dict):
 
 
 def dibujar_temporizador(estado_juego:dict):
+    """
+    Esta funcion se encarga de dibujar el cronometro durante la pantalla del juego
+    Recibe: estado_juego(dict): Diccionario con todos los datos importantes del juego.
+    No tiene retorno
+    """
     fuente = pygame.font.SysFont(None, 50)
     texto = fuente.render(estado_juego['tiempo'], True, "white")
     estado_juego['pantalla'].blit(texto, (100, 100))

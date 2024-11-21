@@ -30,6 +30,12 @@ def mostrar_sudoku(matriz:list[list])->None:
         print("")
 
 def generar_sudoku(matriz):
+    """
+    Esta funcion se encarga de cargar una matriz 9x9 respetando las reglas del sudoku.
+    Recibe: matriz(list[list]): Matriz inicializada a cargar
+    Retorna: False si no encuentra numeros validos para cargar. 
+            True si todas las celdas se llenaron.
+    """
     for i in range(9):
         for j in range(9):
             if matriz[i][j] == 0:  # Solo intentamos llenar celdas vacías
@@ -45,6 +51,16 @@ def generar_sudoku(matriz):
     return True  # Si todas las celdas se llenaron, el Sudoku está completo
 
 def validar_numero_sudoku(matriz, numero, fila, columna):
+    """
+    Esta funcion se encarga de validar que el numero que se va a ingresar a una celda no se encuentre
+    en la subcuadricula, ni en la misma fila, ni en la columna.
+    Recibe: matriz(list[list]): Matriz a validar.
+            numero(int): Numero a validar en la fila o columna.
+            fila(int): Indice de la fila a validar.
+            columna(int): Indice de la columna a validar
+    Retorna: False si falla alguna de las validaciones.
+            True si se valida correctamente.
+    """
     # Validar la fila
     for i in range(9):
         if matriz[fila][i] == numero:
@@ -69,6 +85,12 @@ def validar_numero_sudoku(matriz, numero, fila, columna):
 # ----------------------
 
 def ocultar_celdas(matriz:list[list[int]], porcentaje:float = 0.2):
+    """
+    Esta funcion se encarga de ocultar de forma aleatoria distintos elementos de una matriz creando una copia de esta.
+    Recibe: matriz[list[list[any]]]: Matriz a copiar para esconderle celdas.
+            porcentaje[float]: Por defecto 0.2. Porcentaje de celdas a ocultar.
+    Retorna: copia_tablero[list[list[any]]]: Copia de la matriz con celdas ocultas.
+    """
     cantidad_celdas_a_ocultar = int(81 * porcentaje)
     copia_tablero = matriz[:]
     for _ in range(cantidad_celdas_a_ocultar):
@@ -82,6 +104,12 @@ def ocultar_celdas(matriz:list[list[int]], porcentaje:float = 0.2):
 
 
 def inicializar_tablero_sudoku():
+    """
+    Esta funcion se encarga de inicializar el tablero de una matriz.
+    Trabaja con las funciones inicializar_matriz, generar_sudoku y ocultar_celdas.
+    No recibe parametros.
+    Retorna: ocultar_celdas(matriz) -> Matriz lista para jugar al Sudoku 
+    """
     matriz = inicializar_matriz(9, 9, 0)
     generar_sudoku(matriz)
     return ocultar_celdas(matriz)

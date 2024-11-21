@@ -4,6 +4,13 @@ from constantes import *
 
           
 def validar_colisiones_menu(evento, opciones, estado):
+    """
+    Esta funcion se encarga de validar las colisiones de los botonees del menu. Cuando se pulse un boton cambia el estado del juego.
+    Recibe: evento(dict): Diccionario de eventos del juego.
+            opciones(list[dict]): Opciones para cada boton.
+            estado(str): Estado del juego
+    Retorna: estado(str): Estado del juego
+    """
     x, y = evento.pos
     for opcion in opciones:
         texto_rect = pygame.Rect(opcion["posicion"][0], opcion["posicion"][1], ANCHO_BOTON, ALTO_BOTON)
@@ -19,6 +26,14 @@ def validar_colisiones_menu(evento, opciones, estado):
     return estado
 
 def calcular_tiempo_jugado(segundos, minutos):
+    """
+    Esta funcion se encarga de calcular el tiempo que lleva transcurrido el juego.
+    Recibe segundos y minutos inicializados en 0.
+    Retorna: Una tupla.
+    La tupla contiene: cadena(str): Cadena formateada en minutos y segundos.
+                       segundos(int): Segundos actual
+                       minutos(int): Minutos actual
+    """
     segundos += 1
     if segundos > 60:
         minutos += 1
