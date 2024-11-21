@@ -35,7 +35,7 @@ def calcular_tiempo_jugado(segundos, minutos):
                        minutos(int): Minutos actual
     """
     segundos += 1
-    if segundos > 60:
+    if segundos >= 60:
         minutos += 1
         segundos = 0
     if minutos < 10:

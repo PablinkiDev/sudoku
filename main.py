@@ -16,8 +16,6 @@ dificultad = "facil"
 # Ventana
 pantalla = pygame.display.set_mode(DIMENSIONES_PANTALLA)
 
-fondo = pygame.image.load("img/fondo.jpg")
-
 FUENTE = pygame.font.Font(None, 74)
 mi_evento_segundo = pygame.USEREVENT + 1
 un_segundo = 1000
@@ -40,9 +38,6 @@ estado_juego = {
 }
 
 while True:
-    # pantalla.blit(facil, facil_rect)
-    # pantalla.blit(intermedio, intermedio_rect)
-    # pantalla.blit(dificil, dificil_rect)
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             pygame.quit()

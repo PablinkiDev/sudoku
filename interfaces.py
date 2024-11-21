@@ -29,7 +29,10 @@ def pantalla_menu(eventos, estado_juego):
     """
     Esta funcion se encarga de dibujar la pantalla del menu.
     """
-    estado_juego['pantalla'].blit(cargar_imagen("img/fondo.jpg"), (0, 0))
+    estado_juego['pantalla'].fill(COLOR_FONDO)
+    estado_juego['pantalla'].blit(cargar_imagen("img/calculadora.png", (500, 500)), (0, 0))
+    estado_juego['pantalla'].blit(cargar_imagen("img/sudoku.png", (200, 200)), (500, 500))
+    estado_juego['pantalla'].blit(cargar_imagen("img/python.png", (200, 200)), (1000, 100))
     fuente = pygame.font.Font(None, 40)
     dibujar_botones_menu(estado_juego['pantalla'], fuente)
     
@@ -73,16 +76,16 @@ def dibujar_botones_menu(pantalla, fuente):
             fuente: Fuente que tendran los textos de los botones
     No retorna nada
     """
-        for opcion in OPCIONES_MENU:
-            x, y = opcion["posicion"]
-            texto = fuente.render(opcion["texto"], True, BLANCO)
-            texto_rect = texto.get_rect(center=(x + ANCHO_BOTON // 2, y + ALTO_BOTON // 2))
-            boton_rect = pygame.Rect(x, y, ANCHO_BOTON, ALTO_BOTON)
-            if texto_rect.collidepoint(pygame.mouse.get_pos()):
-                pygame.draw.rect(pantalla, COLOR_BOTON_SELECCION, boton_rect, border_radius=RADIO_BOTON)
-            else:
-                pygame.draw.rect(pantalla, COLOR_BOTON, boton_rect, border_radius=RADIO_BOTON)
-            pantalla.blit(texto, texto_rect.topleft)
+    for opcion in OPCIONES_MENU:
+        x, y = opcion["posicion"]
+        texto = fuente.render(opcion["texto"], True, BLANCO)
+        texto_rect = texto.get_rect(center=(x + ANCHO_BOTON // 2, y + ALTO_BOTON // 2))
+        boton_rect = pygame.Rect(x, y, ANCHO_BOTON, ALTO_BOTON)
+        if texto_rect.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(pantalla, COLOR_BOTON_SELECCION, boton_rect, border_radius=RADIO_BOTON)
+        else:
+            pygame.draw.rect(pantalla, COLOR_BOTON, boton_rect, border_radius=RADIO_BOTON)
+        pantalla.blit(texto, texto_rect.topleft)
 
 def pantalla_juego(estado_juego:dict):
     """
@@ -90,14 +93,14 @@ def pantalla_juego(estado_juego:dict):
     Recibe: estado_juego(dict): Diccionario con todos los elementos importantes del juego.
     No retorna nada.
     """
-    estado_juego['pantalla'].blit(cargar_imagen("img\ingame-fondo.jpg"), (0, 0))
+    estado_juego['pantalla'].blit(cargar_imagen("img\ingame.jpg"), (0, 0))
     errores = str(estado_juego['errores'])
     
     dibujar_temporizador(estado_juego)
     dibujar_tablero(estado_juego)
     
     fuente = pygame.font.SysFont(None, 50)
-    errores = fuente.render(errores, True, "black")
+    errores = fuente.render(errores, True, "white")
     
     for elemento in DICCIONARIO_IMAGENES:
         estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
@@ -134,16 +137,16 @@ def dibujar_tablero(estado_juego:dict):
             numero = fuente.render(str(estado_juego['sudoku'][i][j]), True, "black")
             
             if value != " ":
-                color = "#edbfb7"
+                color = CELDA_RESUELTA
             else:
-                color = "#db8779"
+                color = CELDA_VACIA
             
 
             # Dibujar el rectángulo (celda)          j * cell_size + 200                   Y                 ANCHO     ALTO
             pygame.draw.rect(estado_juego['pantalla'], color, (j * cell_size + 400, i * cell_size + 100, cell_size, cell_size))
             
             # Dibujar borde para cada celda
-            pygame.draw.rect(estado_juego['pantalla'], "#b3341e", (j * cell_size + 400, i * cell_size + 100, cell_size, cell_size), 1)
+            pygame.draw.rect(estado_juego['pantalla'], LINEAS_CELDAS, (j * cell_size + 400, i * cell_size + 100, cell_size, cell_size), 1)
             
             
             if value != " ":
@@ -151,8 +154,8 @@ def dibujar_tablero(estado_juego:dict):
                 
     for elemento in LINEAS_TABLERO:
         x1, y1, x2, y2 = elemento
-        pygame.draw.line(estado_juego['pantalla'], "red", (x1, y1), (x2, y2), 3)
-    pygame.draw.rect(estado_juego['pantalla'], "red", (400, 100, 545, 545), 5)
+        pygame.draw.line(estado_juego['pantalla'], LINEAS_EXTERNAS, (x1, y1), (x2, y2), 3)
+    pygame.draw.rect(estado_juego['pantalla'], LINEAS_EXTERNAS, (400, 100, 545, 545), 5)
     
 
 
