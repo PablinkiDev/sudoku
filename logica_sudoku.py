@@ -116,3 +116,12 @@ def inicializar_tablero_sudoku():
     generar_sudoku(matriz)
     mostrar_sudoku(matriz)
     return ocultar_celdas(matriz)
+
+def verificar_victoria(estado_juego):
+    bandera = True
+    for fila in range(9):
+        for columna in range(9):
+            if estado_juego['sudoku'][fila][columna] != estado_juego['solucion'][fila][columna]:
+                bandera = False
+                break
+    return bandera

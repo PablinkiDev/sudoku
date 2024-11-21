@@ -20,6 +20,7 @@ dificultad = "facil"
 
 # Ventana
 pantalla = pygame.display.set_mode(DIMENSIONES_PANTALLA)
+pygame.display.set_caption("SUDOKU")
 
 FUENTE = pygame.font.Font(None, 74)
 mi_evento_segundo = pygame.USEREVENT + 1
@@ -89,12 +90,13 @@ while True:
                 musica_actual.stop()
             musica_juego.play(-1)
             musica_actual = musica_juego
-
-            
         pantalla_juego(estado_juego)
         # poner_musica("music/juego.mp3", 0.4, 1000)
     elif estado_juego['estado'] == "puntajes":
         pantalla_puntajes(estado_juego)
+        
+    if verificar_victoria(estado_juego):
+        mostrar_mensaje("¡Felicidades, has resuelto el Sudoku!", estado_juego['pantalla'])
 
     # Actualizamos la pantalla
     pygame.display.flip()
