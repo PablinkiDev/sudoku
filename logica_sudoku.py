@@ -1,4 +1,5 @@
 import random
+import copy
 
 def inicializar_matriz(cant_filas:int, cant_columnas:int, valor_inicial:any)->list[list[any]]:
     """
@@ -92,7 +93,8 @@ def ocultar_celdas(matriz:list[list[int]], porcentaje:float = 0.2):
     Retorna: copia_tablero[list[list[any]]]: Copia de la matriz con celdas ocultas.
     """
     cantidad_celdas_a_ocultar = int(81 * porcentaje)
-    copia_tablero = matriz[:]
+    copia_tablero = copy.deepcopy(matriz)
+    
     for _ in range(cantidad_celdas_a_ocultar):
         fila = random.randint(0,8)
         columna = random.randint(0,8)
@@ -112,4 +114,5 @@ def inicializar_tablero_sudoku():
     """
     matriz = inicializar_matriz(9, 9, 0)
     generar_sudoku(matriz)
+    mostrar_sudoku(matriz)
     return ocultar_celdas(matriz)

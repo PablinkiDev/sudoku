@@ -49,3 +49,62 @@ def calcular_tiempo_jugado(segundos, minutos):
     cadena = cadena_minutos + ":" + cadena_segundos
     return cadena, segundos, minutos
     
+def detectar_click(estado_juego, evento):
+    """
+    Detecta el clic del usuario y actualiza la celda seleccionada en el estado del juego.
+    """
+    cell_size = 60
+    tablero_x = 400
+    tablero_y = 100
+
+    if evento.type == pygame.MOUSEBUTTONDOWN:
+        mouse_x, mouse_y = evento.pos
+
+        # Verificar si el clic está dentro del tablero
+        if tablero_x <= mouse_x <= tablero_x + 9 * cell_size and tablero_y <= mouse_y <= tablero_y + 9 * cell_size:
+            # Calcular las coordenadas de la celda
+            columna = (mouse_x - tablero_x) // cell_size
+            fila = (mouse_y - tablero_y) // cell_size
+            estado_juego['celda_seleccionada'] = (fila, columna)
+        else:
+            # Si el clic está fuera del tablero, deseleccionar
+            estado_juego['celda_seleccionada'] = None
+            
+def ingresar_numero(estado_juego, evento):
+    """
+    Permite al usuario ingresar un número en la celda seleccionada.
+    """
+    if estado_juego['celda_seleccionada'] is not None:
+        fila, columna = estado_juego['celda_seleccionada']
+        
+        # Verificar si el evento corresponde a un número del 1 al 9
+        if (fila, columna) not in estado_juego['celdas_bloqueadas']:
+            if evento.unicode.isdigit() and 1 <= int(evento.unicode) <= 9:
+                numero_ingresado = int(evento.unicode)
+                
+                # Validar el número ingresado
+                if numero_ingresado == estado_juego['solucion'][fila][columna]:
+                    estado_juego['sudoku'][fila][columna] = numero_ingresado
+                    estado_juego['colores_celdas'][(fila, columna)] = COLOR_CORRECTO
+                else:
+                    estado_juego['sudoku'][fila][columna] = numero_ingresado
+                    estado_juego['colores_celdas'][(fila, columna)] = COLOR_ERROR
+                    estado_juego['errores'] += 1
+            elif evento.key == pygame.K_BACKSPACE:
+                estado_juego['sudoku'][fila][columna] = " "  # Borrar el contenido de la celda
+
+def inicializar_celdas_bloqueadas(tablero):
+    """
+    Detecta las celdas que tienen valores prellenados (no vacías) y las marca como bloqueadas.
+    """
+    celdas_bloqueadas = []
+    for fila in range(9):
+        for columna in range(9):
+            if tablero[fila][columna] != " ":  # Si la celda tiene un valor, está bloqueada
+                celdas_bloqueadas.append((fila, columna))
+    return celdas_bloqueadas
+
+def poner_musica(ruta, volumen, loops):
+    pygame.mixer.music.load(ruta)
+    pygame.mixer.music.set_volume(volumen)
+    pygame.mixer.music.play(loops)

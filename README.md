@@ -15,3 +15,5 @@
 - Pantalla principal del juego: Tablero de sudoku, temporizador, contador de errores, boton de reinicio, boton volver. ❗
     - Falta funcionalidades del tablero, y contador de errores
 - Pantalla de puntajes: Top 5 de los mejores puntajes con sus respectivos nombres, ordenados de mayor a menor. ❌
+
+Punto 5) Hecho.

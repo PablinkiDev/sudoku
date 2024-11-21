@@ -2,29 +2,8 @@ import pygame
 from constantes import *
 from imagenes import cargar_imagen, DICCIONARIO_IMAGENES
 from logica_sudoku import inicializar_tablero_sudoku
+from funciones import detectar_click
 
-# fuente = pygame.font.Font(None, 40)
-
-# facil = fuente.render("Facil", True, "white")
-# intermedio = fuente.render("Intermedio", True, "white")
-# dificil = fuente.render("Dificil", True, "white")
-
-# if dificultad == "facil":
-#     facil = fuente.render("Facil", True, "green")
-# elif dificultad == "intermedio":
-#     intermedio = fuente.render("Intermedio", True, "green")
-# elif dificultad == "dificil":
-#     dificil = fuente.render("Dificil", True, "green")
-
-# facil_rect = facil.get_rect()
-# intermedio_rect = intermedio.get_rect()
-# dificil_rect = dificil.get_rect()
-# facil_rect.topleft = (1000, 100)
-# intermedio_rect.topleft = (1000, 140)
-# dificil_rect.topleft = (1000, 180)
-
-
-            
 def pantalla_menu(eventos, estado_juego):
     """
     Esta funcion se encarga de dibujar la pantalla del menu.
@@ -35,37 +14,6 @@ def pantalla_menu(eventos, estado_juego):
     estado_juego['pantalla'].blit(cargar_imagen("img/python.png", (200, 200)), (1000, 100))
     fuente = pygame.font.Font(None, 40)
     dibujar_botones_menu(estado_juego['pantalla'], fuente)
-    
-    # facil = fuente.render("Facil", True, "white")
-    # intermedio = fuente.render("Intermedio", True, "white")
-    # dificil = fuente.render("Dificil", True, "white")
-    
-    # if dificultad == "facil":
-    #     facil = fuente.render("Facil", True, "green")
-    # elif dificultad == "intermedio":
-    #     intermedio = fuente.render("Intermedio", True, "green")
-    # elif dificultad == "dificil":
-    #     dificil = fuente.render("Dificil", True, "green")
-    
-    # facil_rect = facil.get_rect()
-    # intermedio_rect = intermedio.get_rect()
-    # dificil_rect = dificil.get_rect()
-    # facil_rect.topleft = (1000, 100)
-    # intermedio_rect.topleft = (1000, 140)
-    # dificil_rect.topleft = (1000, 180)
-                    
-    # pantalla.blit(facil, facil_rect)
-    # pantalla.blit(intermedio, intermedio_rect)
-    # pantalla.blit(dificil, dificil_rect)
-    
-    # for evento in eventos:
-    #     if evento.type == pygame.MOUSEBUTTONDOWN:
-    #         if facil_rect.collidepoint(evento.pos):
-    #             dificultad = "facil"
-    #         elif intermedio_rect.collidepoint(evento.pos):
-    #             dificultad = "intermedio"
-    #         elif dificil_rect.collidepoint(evento.pos):
-    #             dificultad = "dificil"
     
     pygame.display.flip()
 
@@ -127,6 +75,7 @@ def dibujar_tablero(estado_juego:dict):
     Recibe: estado_juego(dict): Diccionario con todos los datos importantes del juego.
     No tiene retorn
     """
+    #lista_coordenadas = []
     fuente = pygame.font.SysFont(None, 32)
     cell_size = 60
     
@@ -136,15 +85,29 @@ def dibujar_tablero(estado_juego:dict):
             value = estado_juego['sudoku'][i][j]
             numero = fuente.render(str(estado_juego['sudoku'][i][j]), True, "black")
             
-            if value != " ":
+            
+            # if (i,j) in estado_juego['celdas_bloqueadas']:
+            #     color = CELDA_RESUELTA
+            # elif estado_juego['celda_seleccionada'] == (i, j):
+            #     color = "yellow"  # Color para la celda seleccionada
+            # # elif value != " ":
+            # #     color = CELDA_RESUELTA
+            # else:
+            #     color = CELDA_VACIA
+            
+            if (i, j) in estado_juego['colores_celdas']:
+                color = estado_juego['colores_celdas'][(i, j)]
+            elif (i, j) in estado_juego['celdas_bloqueadas']:
                 color = CELDA_RESUELTA
+            elif estado_juego['celda_seleccionada'] == (i, j):
+                color = "yellow"
             else:
                 color = CELDA_VACIA
-            
+
 
             # Dibujar el rectángulo (celda)          j * cell_size + 200                   Y                 ANCHO     ALTO
             pygame.draw.rect(estado_juego['pantalla'], color, (j * cell_size + 400, i * cell_size + 100, cell_size, cell_size))
-            
+            # lista_coordenadas.append((j * cell_size + 400, i * cell_size + 100, cell_size, cell_size))
             # Dibujar borde para cada celda
             pygame.draw.rect(estado_juego['pantalla'], LINEAS_CELDAS, (j * cell_size + 400, i * cell_size + 100, cell_size, cell_size), 1)
             
@@ -156,6 +119,8 @@ def dibujar_tablero(estado_juego:dict):
         x1, y1, x2, y2 = elemento
         pygame.draw.line(estado_juego['pantalla'], LINEAS_EXTERNAS, (x1, y1), (x2, y2), 3)
     pygame.draw.rect(estado_juego['pantalla'], LINEAS_EXTERNAS, (400, 100, 545, 545), 5)
+    # print(lista_coordenadas)   
+    
     
 
 
