@@ -1,18 +1,22 @@
 import pygame
 
-reset = pygame.image.load("img/reset.webp")
-reset = pygame.transform.scale(reset, (80, 80))
+def cargar_imagen(ruta, dimensiones = None):
+    imagen = pygame.image.load(ruta)
+    if dimensiones != None:
+        imagen = pygame.transform.scale(imagen, dimensiones)
+    return imagen
+    
+
+reset = cargar_imagen("img/reset.webp", (80, 80))
+volver = cargar_imagen("img/volver.png", (80, 80))
+error = cargar_imagen("img/error.png", (70, 70))
+
 reset_rect = reset.get_rect()
 reset_rect.topleft = (1100, 100) 
 
-volver = pygame.image.load("img/volver.png")
-volver = pygame.transform.scale(volver, (80, 80))
+
 volver_rect = volver.get_rect()
 volver_rect.topleft = (1100, 550)
-    
-error = pygame.image.load("img/error.png")
-error = pygame.transform.scale(error, (70, 70))
-
 
 
 DICCIONARIO_IMAGENES = [
