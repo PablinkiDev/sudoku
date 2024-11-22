@@ -77,7 +77,7 @@ def dibujar_tablero(estado_juego:dict):
     """
     #lista_coordenadas = []
     fuente = pygame.font.SysFont(None, 32)
-    cell_size = 60
+    celda_size = 60
     
     for i in range(9):
         for j in range(9):
@@ -105,15 +105,14 @@ def dibujar_tablero(estado_juego:dict):
                 color = CELDA_VACIA
 
 
-            # Dibujar el rectángulo (celda)          j * cell_size + 200                   Y                 ANCHO     ALTO
-            pygame.draw.rect(estado_juego['pantalla'], color, (j * cell_size + 400, i * cell_size + 100, cell_size, cell_size))
-            # lista_coordenadas.append((j * cell_size + 400, i * cell_size + 100, cell_size, cell_size))
+            # Dibujar el rectángulo (celda)          j * celda_size + 200                   Y                 ANCHO     ALTO
+            pygame.draw.rect(estado_juego['pantalla'], color, (j * celda_size + 400, i * celda_size + 100, celda_size, celda_size))
+            # lista_coordenadas.append((j * celda_size + 400, i * celda_size + 100, celda_size, celda_size))
             # Dibujar borde para cada celda
-            pygame.draw.rect(estado_juego['pantalla'], LINEAS_CELDAS, (j * cell_size + 400, i * cell_size + 100, cell_size, cell_size), 1)
-            
+            pygame.draw.rect(estado_juego['pantalla'], LINEAS_CELDAS, (j * celda_size + 400, i * celda_size + 100, celda_size, celda_size), 1)
             
             if value != " ":
-                estado_juego['pantalla'].blit(numero, (j * cell_size + 425, i * cell_size + 120))
+                estado_juego['pantalla'].blit(numero, (j * celda_size + 425, i * celda_size + 120))
                 
     for elemento in LINEAS_TABLERO:
         x1, y1, x2, y2 = elemento

@@ -31,7 +31,6 @@ tupla = ("", 0, 0)
 tiempo, segundos, minutos = tupla
 errores = 0
 
-# Diccionario Global
 estado_juego = {
     'pantalla': pantalla,
     'sudoku': sudoku,
@@ -91,12 +90,11 @@ while True:
             musica_juego.play(-1)
             musica_actual = musica_juego
         pantalla_juego(estado_juego)
-        # poner_musica("music/juego.mp3", 0.4, 1000)
     elif estado_juego['estado'] == "puntajes":
         pantalla_puntajes(estado_juego)
         
     if verificar_victoria(estado_juego):
-        mostrar_mensaje("¡Felicidades, has resuelto el Sudoku!", estado_juego['pantalla'])
+        mostrar_mensaje("Ganaste! :D", estado_juego['pantalla'])
 
     # Actualizamos la pantalla
     pygame.display.flip()
