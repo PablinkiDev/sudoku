@@ -50,6 +50,5 @@ DICCIONARIO_IMAGENES = [
         "url": "img/error.png",
         "posicion_x": 500,
         "posicion_y": 20,
-    },
-    
+    }, 
 ]

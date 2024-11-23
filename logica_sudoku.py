@@ -37,19 +37,29 @@ def generar_sudoku(matriz):
     Retorna: False si no encuentra numeros validos para cargar. 
             True si todas las celdas se llenaron.
     """
-    for i in range(9):
-        for j in range(9):
-            if matriz[i][j] == 0:  # Solo intentamos llenar celdas vacías
-                numeros = list(range(1, 10))  # Convertimos el rango a una lista
-                random.shuffle(numeros)  # Barajamos los números del 1 al 9
-                for numero in numeros:
-                    if validar_numero_sudoku(matriz, numero, i, j):
-                        matriz[i][j] = numero
-                        if generar_sudoku(matriz):
-                            return True
-                        matriz[i][j] = 0  # Retrocedemos si no encontramos una solución
-                return False  # Si no hay números válidos, volvemos
-    return True  # Si todas las celdas se llenaron, el Sudoku está completo
+    completo = False  
+    while not completo:
+        completo = True  
+        for i in range(9):
+            for j in range(9):
+                if matriz[i][j] == 0:  
+                    numeros = list(range(1, 10))  
+                    random.shuffle(numeros)  
+                    colocado = False  
+                    for numero in numeros:
+                        if validar_numero_sudoku(matriz, numero, i, j):  
+                            matriz[i][j] = numero
+                            colocado = True
+                            break  
+                    if not colocado:  
+                        completo = False  
+                        break  
+        if not completo:  
+            for i in range(9):
+                for j in range(9):
+                    if matriz[i][j] != 0:
+                        matriz[i][j] = 0
+    return True  
 
 def validar_numero_sudoku(matriz, numero, fila, columna):
     """
@@ -62,26 +72,32 @@ def validar_numero_sudoku(matriz, numero, fila, columna):
     Retorna: False si falla alguna de las validaciones.
             True si se valida correctamente.
     """
-    # Validar la fila
+    valido = True 
+    
     for i in range(9):
         if matriz[fila][i] == numero:
-            return False
+            valido = False
+            break  
     
-    # Validar la columna
-    for j in range(9):
-        if matriz[j][columna] == numero:
-            return False
+    if valido:  
+        for j in range(9):
+            if matriz[j][columna] == numero:
+                valido = False
+                break
     
-    # Validar la subcuadrícula de 3x3
-    subcuadrícula_fila_inicio = (fila // 3) * 3
-    subcuadrícula_columna_inicio = (columna // 3) * 3
+    if valido:  
+        subcuadrícula_fila_inicio = (fila // 3) * 3
+        subcuadrícula_columna_inicio = (columna // 3) * 3
+        
+        for i in range(3):
+            for j in range(3):
+                if matriz[subcuadrícula_fila_inicio + i][subcuadrícula_columna_inicio + j] == numero:
+                    valido = False
+                    break
+            if not valido:  
+                break
     
-    for i in range(3):
-        for j in range(3):
-            if matriz[subcuadrícula_fila_inicio + i][subcuadrícula_columna_inicio + j] == numero:
-                return False
-    
-    return True
+    return valido  
 
 # ----------------------
 

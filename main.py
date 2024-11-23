@@ -8,15 +8,11 @@ from interfaces import *
 ########################################### MAIN ####################################################
 
 pygame.init()
-pygame.mixer.init()
 
 matriz = inicializar_matriz(9, 9, 0)
 generar_sudoku(matriz)
 mostrar_sudoku(matriz)
 sudoku = ocultar_celdas(matriz)
-
-estado = "inicio"
-dificultad = "facil"
 
 # Ventana
 pantalla = pygame.display.set_mode(DIMENSIONES_PANTALLA)
@@ -27,31 +23,22 @@ mi_evento_segundo = pygame.USEREVENT + 1
 un_segundo = 1000
 pygame.time.set_timer(mi_evento_segundo, un_segundo)
 
-tupla = ("", 0, 0)
-tiempo, segundos, minutos = tupla
-errores = 0
-
-# Diccionario Global
 estado_juego = {
     'pantalla': pantalla,
     'sudoku': sudoku,
     'solucion': matriz,
-    'estado': estado,
-    'dificultad': dificultad,
-    'tiempo': tiempo,
-    'errores': errores,
-    'segundos': segundos,
-    'minutos': minutos,
+    'estado': "inicio",
+    'dificultad': "facil",
+    'tiempo': "",
+    'errores': 0,
+    'segundos': 0,
+    'minutos': 0,
     'celda_seleccionada': None,
 }
 
 estado_juego['celdas_bloqueadas'] = inicializar_celdas_bloqueadas(estado_juego['sudoku'])
 estado_juego['colores_celdas'] = {}
 
-# poner_musica("music/intro.mp3", 0.4, 1000)
-
-musica_menu = pygame.mixer.Sound("music/intro.mp3")
-musica_juego = pygame.mixer.Sound("music/juego.mp3")
 musica_actual = None
 
 while True:
@@ -61,8 +48,8 @@ while True:
             quit()
         if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:
             if estado_juego['estado'] == "inicio":
-                estado_juego['estado'] = validar_colisiones_menu(evento, OPCIONES_MENU, estado)
-            if estado_juego['estado'] == "jugar" and volver_rect.collidepoint(pygame.mouse.get_pos()):
+                estado_juego['estado'] = validar_colisiones_menu(evento, OPCIONES_MENU, estado_juego['estado'])
+            if (estado_juego['estado'] == "jugar" or estado_juego['estado'] == "configuracion" or estado_juego['estado'] == "puntajes") and volver_rect.collidepoint(pygame.mouse.get_pos()):
                 estado_juego['estado'] = "inicio"
             if estado_juego['estado'] == "jugar" and reset_rect.collidepoint(pygame.mouse.get_pos()):
                 estado_juego['sudoku'] = inicializar_tablero_sudoku()
@@ -79,25 +66,17 @@ while True:
 
     if estado_juego['estado'] == "inicio":
         pantalla_menu(evento, estado_juego)  
-        if musica_actual != musica_menu:
-            if musica_actual:
-                musica_actual.stop()
-            musica_menu.play(-1)
-            musica_actual = musica_menu
+        musica_actual = validar_musica(musica_actual, MUSICA_MENU)
     elif estado_juego['estado'] == "jugar":
-        if musica_actual != musica_juego:
-            if musica_actual:
-                musica_actual.stop()
-            musica_juego.play(-1)
-            musica_actual = musica_juego
+        musica_actual = validar_musica(musica_actual, MUSICA_JUEGO)
         pantalla_juego(estado_juego)
-        # poner_musica("music/juego.mp3", 0.4, 1000)
+    elif estado_juego['estado'] == "configuracion":
+        pantalla_configuracion(estado_juego)
     elif estado_juego['estado'] == "puntajes":
         pantalla_puntajes(estado_juego)
         
     if verificar_victoria(estado_juego):
-        mostrar_mensaje("¡Felicidades, has resuelto el Sudoku!", estado_juego['pantalla'])
+        mostrar_mensaje("Ganaste! :D", estado_juego['pantalla'])
 
     # Actualizamos la pantalla
     pygame.display.flip()
-

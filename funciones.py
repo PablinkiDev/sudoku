@@ -19,6 +19,8 @@ def validar_colisiones_menu(evento, opciones, estado):
                 estado = "jugar"
             elif opcion["texto"] == "Puntajes":
                 estado = "puntajes"
+            elif opcion["texto"] == "Configuracion":
+                estado = "configuracion"
             elif opcion["texto"] == "Salir":
                 pygame.quit()
                 quit()
@@ -47,7 +49,7 @@ def calcular_tiempo_jugado(segundos, minutos):
     else:
         cadena_segundos = str(segundos)
     cadena = cadena_minutos + ":" + cadena_segundos
-    return cadena, segundos, minutos
+    return [cadena, segundos, minutos]
     
 def detectar_click(estado_juego, evento):
     """
@@ -109,11 +111,19 @@ def mostrar_mensaje(mensaje, pantalla):
     Muestra un mensaje en pantalla.
     """
     fuente = pygame.font.Font(None, 74)
-    texto = fuente.render(mensaje, True, (0, 255, 0))  # Color verde para el mensaje
-    texto_rect = texto.get_rect(center=(640, 360))  # Posicionar el mensaje en el centro de la pantalla
+    texto = fuente.render(mensaje, True, (0, 255, 0)) 
+    texto_rect = texto.get_rect(center=(640, 680))
     pantalla.blit(texto, texto_rect)
 
 def poner_musica(ruta, volumen, loops):
     pygame.mixer.music.load(ruta)
     pygame.mixer.music.set_volume(volumen)
     pygame.mixer.music.play(loops)
+    
+def validar_musica(musica_actual, musica_a_validar):
+    if musica_actual != musica_a_validar:
+            if musica_actual:
+                musica_actual.stop()
+            musica_a_validar.play(-1)
+            musica_actual = musica_a_validar
+    return musica_actual

@@ -17,3 +17,12 @@
 - Pantalla de puntajes: Top 5 de los mejores puntajes con sus respectivos nombres, ordenados de mayor a menor. ❌
 
 Punto 5) Hecho.
+
+
+Cambios desde la defensa:
+
+Se agrego:
+- Funcion validar_musica() en el archivo **funciones.py** 
+- Se cambio el fondo del menu
+- Se soluciono el hover de los botones en el menu
+- Se agrego la opcion de Configuraciones
