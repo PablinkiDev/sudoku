@@ -23,6 +23,11 @@ mi_evento_segundo = pygame.USEREVENT + 1
 un_segundo = 1000
 pygame.time.set_timer(mi_evento_segundo, un_segundo)
 
+tupla = ("", 0, 0)
+tiempo, segundos, minutos = tupla
+errores = 0
+
+# Diccionario Global
 estado_juego = {
     'pantalla': pantalla,
     'sudoku': sudoku,
@@ -70,8 +75,6 @@ while True:
     elif estado_juego['estado'] == "jugar":
         musica_actual = validar_musica(musica_actual, MUSICA_JUEGO)
         pantalla_juego(estado_juego)
-    elif estado_juego['estado'] == "configuracion":
-        pantalla_configuracion(estado_juego)
     elif estado_juego['estado'] == "puntajes":
         pantalla_puntajes(estado_juego)
         

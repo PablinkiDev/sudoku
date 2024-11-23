@@ -73,30 +73,7 @@ def pantalla_puntajes(estado_juego:dict):
     fuente = pygame.font.SysFont(None, 74)
     texto = fuente.render("Pantalla de Puntajes", True, "black")
     estado_juego['pantalla'].blit(texto, (400, 300))
-    
-    for diccionario_imagen in DICCIONARIO_IMAGENES:
-        if diccionario_imagen['nombre'] == "volver":
-            estado_juego['pantalla'].blit(diccionario_imagen['surface'], (diccionario_imagen['posicion_x'], diccionario_imagen['posicion_y']))
-
-def pantalla_configuracion(estado_juego:dict):
-    """
-    Esta funcion se encarga de dibujar la pantalla de puntajes.
-    Recibe: estado_juego(dict): Diccionario con todos los elementos importantes del juego.
-    No retorna nada
-    """
-    estado_juego['pantalla'].blit(cargar_imagen("img/fondo.jpeg", (1280, 720)), (0, 0))
-    estado_juego['pantalla'].blit(cargar_imagen("img/logo.png", (600, 200)), (350, 40))
-    fuente = pygame.font.SysFont(None, 40)
-    
-    dibujar_input(estado_juego)
-    
-    for diccionario_imagen in DICCIONARIO_IMAGENES:
-        if diccionario_imagen['nombre'] == "volver":
-            estado_juego['pantalla'].blit(diccionario_imagen['surface'], (diccionario_imagen['posicion_x'], diccionario_imagen['posicion_y']))
-            
-    
-    
-    dibujar_botones_menu(estado_juego['pantalla'], fuente, OPCIONES_CONFIG)
+    pygame.display.flip()
 
 def dibujar_tablero(estado_juego:dict):
     """
