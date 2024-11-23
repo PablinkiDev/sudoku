@@ -55,7 +55,6 @@ def pantalla_juego(estado_juego:dict):
     
     estado_juego['pantalla'].blit(errores, (580, 42))
     
-    pygame.display.flip()
 
 def pantalla_puntajes(estado_juego:dict):
     """
@@ -67,7 +66,7 @@ def pantalla_puntajes(estado_juego:dict):
     fuente = pygame.font.SysFont(None, 74)
     texto = fuente.render("Pantalla de Puntajes", True, "black")
     estado_juego['pantalla'].blit(texto, (400, 300))
-    pygame.display.flip()
+
 
 def dibujar_tablero(estado_juego:dict):
     """
@@ -85,16 +84,6 @@ def dibujar_tablero(estado_juego:dict):
             value = estado_juego['sudoku'][i][j]
             numero = fuente.render(str(estado_juego['sudoku'][i][j]), True, "black")
             
-            
-            # if (i,j) in estado_juego['celdas_bloqueadas']:
-            #     color = CELDA_RESUELTA
-            # elif estado_juego['celda_seleccionada'] == (i, j):
-            #     color = "yellow"  # Color para la celda seleccionada
-            # # elif value != " ":
-            # #     color = CELDA_RESUELTA
-            # else:
-            #     color = CELDA_VACIA
-            
             if (i, j) in estado_juego['colores_celdas']:
                 color = estado_juego['colores_celdas'][(i, j)]
             elif (i, j) in estado_juego['celdas_bloqueadas']:
@@ -103,7 +92,6 @@ def dibujar_tablero(estado_juego:dict):
                 color = "yellow"
             else:
                 color = CELDA_VACIA
-
 
             # Dibujar el rectángulo (celda)          j * celda_size + 200                   Y                 ANCHO     ALTO
             pygame.draw.rect(estado_juego['pantalla'], color, (j * celda_size + 400, i * celda_size + 100, celda_size, celda_size))

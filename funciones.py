@@ -47,7 +47,7 @@ def calcular_tiempo_jugado(segundos, minutos):
     else:
         cadena_segundos = str(segundos)
     cadena = cadena_minutos + ":" + cadena_segundos
-    return cadena, segundos, minutos
+    return [cadena, segundos, minutos]
     
 def detectar_click(estado_juego, evento):
     """
