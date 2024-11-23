@@ -2,15 +2,17 @@ import pygame
 from constantes import *
 from imagenes import cargar_imagen, DICCIONARIO_IMAGENES
 from logica_sudoku import inicializar_tablero_sudoku
-from funciones import detectar_click
+from funciones import mostrar_mensaje
 
 def dibujar_input(estado_juego):
-    input_rect = pygame.Rect(520, 300, 300, 75)
+    input_rect = pygame.Rect(520, 325, 300, 50)
+    
+    mostrar_mensaje("Nombre de usuario", estado_juego['pantalla'], (670, 300), "white", 30)
     if input_rect.collidepoint(pygame.mouse.get_pos()):
-        pygame.draw.rect(estado_juego['pantalla'], "#5c6066", input_rect, border_radius=RADIO_BOTON)
+        pygame.draw.rect(estado_juego['pantalla'], "#5c6066", input_rect)
     else:
-        pygame.draw.rect(estado_juego['pantalla'], "#41454a", input_rect, border_radius=RADIO_BOTON)
-
+        pygame.draw.rect(estado_juego['pantalla'], "#41454a", input_rect)
+    
 
 def pantalla_menu(eventos, estado_juego):
     """
@@ -21,8 +23,7 @@ def pantalla_menu(eventos, estado_juego):
     estado_juego['pantalla'].blit(cargar_imagen("img/logo.png", (600, 200)), (350, 40))
     fuente = pygame.font.Font(None, 40)
     dibujar_botones_menu(estado_juego['pantalla'], fuente, OPCIONES_MENU)
-    
-    pygame.display.flip()
+
 
 def dibujar_botones_menu(pantalla, fuente, diccionario):
     """
@@ -73,7 +74,30 @@ def pantalla_puntajes(estado_juego:dict):
     fuente = pygame.font.SysFont(None, 74)
     texto = fuente.render("Pantalla de Puntajes", True, "black")
     estado_juego['pantalla'].blit(texto, (400, 300))
-    pygame.display.flip()
+    
+    for elemento in DICCIONARIO_IMAGENES:
+        if elemento['nombre'] == "volver":
+            estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
+
+def pantalla_configuracion(estado_juego:dict):
+    """
+    Esta funcion se encarga de dibujar la pantalla de puntajes.
+    Recibe: estado_juego(dict): Diccionario con todos los elementos importantes del juego.
+    No retorna nada
+    """
+    
+    fuente = pygame.font.SysFont(None, 40)
+    estado_juego['pantalla'].blit(cargar_imagen("img/fondo.jpeg", (1280, 720)), (0, 0))
+    estado_juego['pantalla'].blit(cargar_imagen("img/logo.png", (600, 200)), (350, 40))
+    
+    dibujar_input(estado_juego)
+    dibujar_botones_menu(estado_juego['pantalla'], fuente, OPCIONES_CONFIG)
+    
+    for elemento in DICCIONARIO_IMAGENES:
+        if elemento['nombre'] == "volver":
+            estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
+    
+
 
 def dibujar_tablero(estado_juego:dict):
     """

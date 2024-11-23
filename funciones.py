@@ -106,13 +106,13 @@ def inicializar_celdas_bloqueadas(tablero):
                 celdas_bloqueadas.append((fila, columna))
     return celdas_bloqueadas
 
-def mostrar_mensaje(mensaje, pantalla):
+def mostrar_mensaje(mensaje, pantalla, coordenadas, color, fuente_size):
     """
     Muestra un mensaje en pantalla.
     """
-    fuente = pygame.font.Font(None, 74)
-    texto = fuente.render(mensaje, True, (0, 255, 0)) 
-    texto_rect = texto.get_rect(center=(640, 680))
+    fuente = pygame.font.Font(None, fuente_size)
+    texto = fuente.render(mensaje, True, color) 
+    texto_rect = texto.get_rect(center=coordenadas)
     pantalla.blit(texto, texto_rect)
 
 def poner_musica(ruta, volumen, loops):

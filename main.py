@@ -39,6 +39,7 @@ estado_juego = {
     'segundos': 0,
     'minutos': 0,
     'celda_seleccionada': None,
+    'user': "Player"
 }
 
 estado_juego['celdas_bloqueadas'] = inicializar_celdas_bloqueadas(estado_juego['sudoku'])
@@ -75,11 +76,14 @@ while True:
     elif estado_juego['estado'] == "jugar":
         musica_actual = validar_musica(musica_actual, MUSICA_JUEGO)
         pantalla_juego(estado_juego)
+    elif estado_juego['estado'] == "configuracion":
+        pantalla_configuracion(estado_juego)
     elif estado_juego['estado'] == "puntajes":
         pantalla_puntajes(estado_juego)
         
     if verificar_victoria(estado_juego):
         mostrar_mensaje("Ganaste! :D", estado_juego['pantalla'])
+
 
     # Actualizamos la pantalla
     pygame.display.flip()
