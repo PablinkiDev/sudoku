@@ -30,13 +30,16 @@ def mostrar_sudoku(matriz:list[list])->None:
             print(" ")
         print("")
 
-def generar_sudoku(matriz):
+def generar_sudoku():
     """
     Esta funcion se encarga de cargar una matriz 9x9 respetando las reglas del sudoku.
     Recibe: matriz(list[list]): Matriz inicializada a cargar
     Retorna: False si no encuentra numeros validos para cargar. 
             True si todas las celdas se llenaron.
     """
+    
+    matriz = inicializar_matriz(9, 9, 0)
+    
     completo = False  
     while not completo:
         completo = True  
@@ -59,7 +62,7 @@ def generar_sudoku(matriz):
                 for j in range(9):
                     if matriz[i][j] != 0:
                         matriz[i][j] = 0
-    return True  
+    return matriz  
 
 def validar_numero_sudoku(matriz, numero, fila, columna):
     """
@@ -101,15 +104,21 @@ def validar_numero_sudoku(matriz, numero, fila, columna):
 
 # ----------------------
 
-def ocultar_celdas(matriz:list[list[int]], porcentaje:float = 0.2):
+def ocultar_celdas(matriz:list[list[int]], dificultad):
     """
     Esta funcion se encarga de ocultar de forma aleatoria distintos elementos de una matriz creando una copia de esta.
     Recibe: matriz[list[list[any]]]: Matriz a copiar para esconderle celdas.
             porcentaje[float]: Por defecto 0.2. Porcentaje de celdas a ocultar.
     Retorna: copia_tablero[list[list[any]]]: Copia de la matriz con celdas ocultas.
     """
-    cantidad_celdas_a_ocultar = int(81 * porcentaje)
     copia_tablero = copy.deepcopy(matriz)
+    
+    if dificultad == "facil":
+        cantidad_celdas_a_ocultar = int(81 * 0.2)
+    elif dificultad == "intermedio":
+        cantidad_celdas_a_ocultar = int(81 * 0.4)
+    elif dificultad == 'dificil':
+        cantidad_celdas_a_ocultar = int(81 * 0.6)
     
     for _ in range(cantidad_celdas_a_ocultar):
         fila = random.randint(0,8)
@@ -131,6 +140,7 @@ def inicializar_tablero_sudoku():
     matriz = inicializar_matriz(9, 9, 0)
     generar_sudoku(matriz)
     mostrar_sudoku(matriz)
+    print(type(matriz))
     return ocultar_celdas(matriz)
 
 def verificar_victoria(estado_juego):

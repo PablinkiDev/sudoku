@@ -26,3 +26,19 @@ Se agrego:
 - Se cambio el fondo del menu
 - Se soluciono el hover de los botones en el menu
 - Se agrego la opcion de Configuraciones
+- Se soluciono un bug ingame:
+    Al resetear el juego, se generaba un tablero nuevo, pero la matriz de la solución no cambiaba nunca. 
+    Por lo tanto el juego seguia teniendo la misma solucion, rompiendo las reglas del Sudoku.
+- Se agrego un input para que el usuario ingrese su nombre.
+    ❌ Falta mostrar el nombre después de ingresarlo en el input.
+    ❌ Falta tener un nombre por defecto.
+- Se agregaron los puntajes:
+    - Agregamos constantes para cada valor numerico fijo a manejar.
+    - Mostramos el puntaje en vivo durante la partida.
+    - Se escribe los datos al finalizar la partida en un json.
+    - Se lee el json al inicializar el programa.
+- Se agrego pantalla de finalización del juego:
+    - Se muestran los datos (nombre, puntaje, errores, tiempo)
+    - Boton para volver al menu
+- Se agrego la funcionalidad de cambiar la dificultad en la configuracion.
+- Se agrego pantalla de puntajes con el TOP 5.

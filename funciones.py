@@ -1,8 +1,9 @@
 import random
 import pygame
+import json
 from constantes import *
+from logica_sudoku import *
 
-          
 def validar_colisiones_menu(evento, opciones, estado):
     """
     Esta funcion se encarga de validar las colisiones de los botonees del menu. Cuando se pulse un boton cambia el estado del juego.
@@ -24,8 +25,23 @@ def validar_colisiones_menu(evento, opciones, estado):
             elif opcion["texto"] == "Salir":
                 pygame.quit()
                 quit()
-                
     return estado
+
+def validar_colisiones_configuraciones(evento, opciones, estado_juego):
+    x, y = evento.pos
+    for opcion in opciones:
+        texto_rect = pygame.Rect(opcion["posicion"][0], opcion["posicion"][1], ANCHO_BOTON, ALTO_BOTON)
+        if texto_rect.collidepoint(x, y):
+            if opcion['btn'] == 1: 
+                if estado_juego['dificultad'] == 'facil':
+                    estado_juego['dificultad'] = "intermedio"
+                    opcion["texto"] = f"Dificultad {DIFICULTADES[1]}"
+                elif estado_juego['dificultad'] == 'intermedio':
+                    estado_juego['dificultad'] = 'dificil'
+                    opcion["texto"] = f"Dificultad {DIFICULTADES[2]}"
+                elif estado_juego['dificultad'] == 'dificil':
+                    opcion["texto"] = f"Dificultad {DIFICULTADES[0]}"
+                    estado_juego['dificultad'] = 'facil'
 
 def calcular_tiempo_jugado(segundos, minutos):
     """
@@ -88,10 +104,12 @@ def ingresar_numero(estado_juego, evento):
                 if numero_ingresado == estado_juego['solucion'][fila][columna]:
                     estado_juego['sudoku'][fila][columna] = numero_ingresado
                     estado_juego['colores_celdas'][(fila, columna)] = COLOR_CORRECTO
+                    estado_juego['puntaje'] += BONIFICACION_POR_ACIERTO
                 else:
                     estado_juego['sudoku'][fila][columna] = numero_ingresado
                     estado_juego['colores_celdas'][(fila, columna)] = COLOR_ERROR
                     estado_juego['errores'] += 1
+                    estado_juego['puntaje'] -= PENALIZACION_POR_ERRORES
             elif evento.key == pygame.K_BACKSPACE:
                 estado_juego['sudoku'][fila][columna] = " "  # Borrar el contenido de la celda
 
@@ -128,17 +146,54 @@ def validar_musica(musica_actual, musica_a_validar):
             musica_actual = musica_a_validar
     return musica_actual
 
-def calcular_puntajes(estado_juego)->int:
-    penalizacion_error = 50
-    penalizacion_tiempo = 10
-
+def calcular_dificultad(estado_juego):
     if estado_juego['dificultad'] == "facil":
-        dificultad = 1.0
+        dificultad = BONIFICACION_DIFICULTAD_FACIL
     elif estado_juego['dificultad'] == "intermedio":
-        dificultad = 1.5
+        dificultad = BONIFICACION_DIFICULTAD_MEDIA
     elif estado_juego['dificultad'] == "dificil":
-        dificultad = 2.0
+        dificultad = BONIFICACION_DIFICULTAD_DIFICIL
+        
+    return estado_juego['puntaje'] * dificultad
+
+
+
+
+def ordenar_ranking(lista_ranking):
+    for i in range(len(lista_ranking) - 1):
+        for j in range(i + 1, len(lista_ranking)):
+            if lista_ranking[i]['points'] < lista_ranking[j]['points']:
+                aux = lista_ranking[j]['points']
+                lista_ranking[j]['points'] = lista_ranking[i]['points']
+                lista_ranking[i]['points'] = aux
+
+def leer_json(ruta):
+    with open(ruta, "r") as archivo:
+        data = json.load(archivo)
+    return data
+
+
+
+def escribir_json(ruta, estado_juego):
+    data = {
+        "user": estado_juego['user'],
+        "points": estado_juego['puntaje'],
+        "minutos": estado_juego['minutos'],
+        "errores": estado_juego['errores']
+    }
     
+    estado_juego['ranking'].append(data)
     
-    puntaje = (estado_juego['puntaje'] - (estado_juego['errores'] * penalizacion_error) - (estado_juego['minutos'] * penalizacion_tiempo))  * dificultad
-    print(puntaje)
+    with open(ruta, "w") as archivo:
+        json.dump(estado_juego['ranking'], archivo, indent=4)
+        
+        
+def resetear_juego(estado_juego):
+    estado_juego['tablero_armado'] = False
+    estado_juego['puntaje'] = PUNTAJE_BASE
+    estado_juego['dificultad_calculada'] = False
+    estado_juego['puntos_calculados'] = False
+    estado_juego['colores_celdas'] = {}
+    estado_juego['errores'] = 0
+    estado_juego['tiempo'], estado_juego['segundos'], estado_juego['minutos'] = "", 0, 0
+    estado_juego['celdas_bloqueadas'] = inicializar_celdas_bloqueadas(estado_juego['sudoku'])

@@ -4,15 +4,59 @@ from imagenes import cargar_imagen, DICCIONARIO_IMAGENES
 from logica_sudoku import inicializar_tablero_sudoku
 from funciones import mostrar_mensaje
 
+
+def dibujar_ranking(estado_juego):
+    FUENTE = pygame.font.Font(None, 72)
+    x = 380
+    y = 250
+    for i in range(5):
+        top = i + 1
+        if top == 1:
+            color = ORO
+        elif top == 2:
+            color = PLATA
+        elif top == 3:
+            color = BRONCE
+        else:
+            color = BLANCO
+        nombre = FUENTE.render(estado_juego['ranking'][i]['user'], True, color)
+        puntos = FUENTE.render(str(estado_juego['ranking'][i]['points']), True, color)
+        top_texto = FUENTE.render(str(top), True, color)
+        
+        estado_juego['pantalla'].blit(top_texto, (x, y))
+        estado_juego['pantalla'].blit(nombre, (x + 100, y))
+        estado_juego['pantalla'].blit(puntos, (x + 400, y))
+        y += 80
+
+
+def pantalla_win(estado_juego):
+    estado_juego['pantalla'].blit(cargar_imagen("img/win_background.jpg"), (0, 0))
+    estado_juego['pantalla'].blit(cargar_imagen('img/win.webp', (400, 300)), (480, 10))
+    
+    for elemento in DICCIONARIO_IMAGENES:
+        if elemento['nombre'] == "volver_white":
+            estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
+    
+    mostrar_mensaje(f"Felicidad {estado_juego['user']} por completar el Sudoku", estado_juego['pantalla'], (670, 315), BLANCO, 50)
+    mostrar_mensaje(f"Tardaste {estado_juego['minutos']} minutos", estado_juego['pantalla'], (670, 370), BLANCO, 50)
+    mostrar_mensaje(f"Hiciste {estado_juego['puntaje']} puntos", estado_juego['pantalla'], (670, 420), BLANCO, 50)
+    mostrar_mensaje(f"Tuviste {estado_juego['errores']} errores", estado_juego['pantalla'], (670, 470), BLANCO, 50)
+    
+    
 def dibujar_input(estado_juego):
-    input_rect = pygame.Rect(520, 325, 300, 50)
-    
+    font = pygame.font.Font(None, 32)
     mostrar_mensaje("Nombre de usuario", estado_juego['pantalla'], (670, 300), "white", 30)
-    if input_rect.collidepoint(pygame.mouse.get_pos()):
-        pygame.draw.rect(estado_juego['pantalla'], "#5c6066", input_rect)
-    else:
-        pygame.draw.rect(estado_juego['pantalla'], "#41454a", input_rect)
     
+    if estado_juego['input_rect'].collidepoint(pygame.mouse.get_pos()):
+        pygame.draw.rect(estado_juego['pantalla'], "#5c6066", estado_juego['input_rect'])
+    else:
+        pygame.draw.rect(estado_juego['pantalla'], "#41454a", estado_juego['input_rect'])
+        
+        
+    if estado_juego['activo_input'] == True:
+        pygame.draw.rect(estado_juego['pantalla'], "#333333", estado_juego['input_rect'])  # Fondo gris del input
+        text_surface = font.render(estado_juego['user'], True, "red")
+        estado_juego['pantalla'].blit(text_surface, (estado_juego['input_rect'].x + 10, estado_juego['input_rect'].y + 10))  # Posición del texto
 
 def pantalla_menu(eventos, estado_juego):
     """
@@ -49,8 +93,14 @@ def pantalla_juego(estado_juego:dict):
     Recibe: estado_juego(dict): Diccionario con todos los elementos importantes del juego.
     No retorna nada.
     """
+    fuente = pygame.font.SysFont(None, 50)
     estado_juego['pantalla'].blit(cargar_imagen("img\ingame.jpg"), (0, 0))
     errores = str(estado_juego['errores'])
+    texto_puntaje = f"Score: {str(estado_juego['puntaje'])}"
+    if estado_juego['puntaje'] < 0:
+        estado_juego['puntaje'] = 0
+    texto_puntaje = fuente.render(texto_puntaje, True, "red")
+    
     
     dibujar_temporizador(estado_juego)
     dibujar_tablero(estado_juego)
@@ -59,9 +109,12 @@ def pantalla_juego(estado_juego:dict):
     errores = fuente.render(errores, True, "white")
     
     for elemento in DICCIONARIO_IMAGENES:
+        if elemento['nombre'] == "volver_white":
+            continue
         estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
     
     estado_juego['pantalla'].blit(errores, (580, 42))
+    estado_juego['pantalla'].blit(texto_puntaje, (780, 42))
     
 
 def pantalla_puntajes(estado_juego:dict):
@@ -70,13 +123,14 @@ def pantalla_puntajes(estado_juego:dict):
     Recibe: estado_juego(dict): Diccionario con todos los elementos importantes del juego.
     No retorna nada
     """
-    estado_juego['pantalla'].fill("lightblue")
+    estado_juego['pantalla'].blit(cargar_imagen("img/fondo.jpeg", (1280, 720)), (0, 0))
+    estado_juego['pantalla'].blit(cargar_imagen("img/logo.png", (600, 200)), (350, 40))
     fuente = pygame.font.SysFont(None, 74)
-    texto = fuente.render("Pantalla de Puntajes", True, "black")
-    estado_juego['pantalla'].blit(texto, (400, 300))
+    
+    dibujar_ranking(estado_juego)
     
     for elemento in DICCIONARIO_IMAGENES:
-        if elemento['nombre'] == "volver":
+        if elemento['nombre'] == "volver_white":
             estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
 
 def pantalla_configuracion(estado_juego:dict):
@@ -94,7 +148,7 @@ def pantalla_configuracion(estado_juego:dict):
     dibujar_botones_menu(estado_juego['pantalla'], fuente, OPCIONES_CONFIG)
     
     for elemento in DICCIONARIO_IMAGENES:
-        if elemento['nombre'] == "volver":
+        if elemento['nombre'] == "volver_white":
             estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
     
 

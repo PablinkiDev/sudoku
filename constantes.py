@@ -9,12 +9,14 @@ OPCIONES_MENU = [
     {"texto": "Salir", "posicion": (520, 600)},
 ]
 
+DIFICULTADES = ["Facil", "Intermedio", "Dificil"]
+
 OPCIONES_CONFIG = [
-    {"texto": "Dificultad:", "posicion": (520, 400)},
-    {"texto": "Resolucion: 1280x720", "posicion": (520, 500)},
-    {"texto": "Modo claro: NO", "posicion": (520, 600)},
-    
+    {"btn": 1, "texto": f"Dificultad {DIFICULTADES[0]}", "posicion": (520, 400)},
+    {"btn": 2, "texto": "Resolucion: -", "posicion": (520, 500)},
+    {"btn": 3, "texto": "Modo claro: NO", "posicion": (520, 600)}
 ]
+
 
 LINEAS_TABLERO = [
     (580, 102, 580, 640),
@@ -23,7 +25,7 @@ LINEAS_TABLERO = [
     (403, 460, 940, 460),
 ]
     #(400, 100, 450, 450)
- 
+
 # BOTONES MENU
 ANCHO_BOTON = 300
 ALTO_BOTON = 75
@@ -49,3 +51,17 @@ CELDA_VACIA = "#c8d5db"
 pygame.mixer.init()
 MUSICA_MENU = pygame.mixer.Sound("music/intro.mp3")
 MUSICA_JUEGO = pygame.mixer.Sound("music/juego.mp3")
+
+# PUNTAJE
+PUNTAJE_BASE = 1000
+PENALIZACION_POR_ERRORES = 5
+PENALIZACION_POR_TIEMPO = 2
+BONIFICACION_POR_ACIERTO = 5
+BONIFICACION_DIFICULTAD_FACIL = 1.2
+BONIFICACION_DIFICULTAD_MEDIA = 1.3
+BONIFICACION_DIFICULTAD_DIFICIL = 1.4
+
+# RANKING
+ORO = "#e3ba24"
+PLATA = "#969695"
+BRONCE = "#6e5401"

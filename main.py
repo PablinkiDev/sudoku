@@ -9,42 +9,51 @@ from interfaces import *
 
 pygame.init()
 
-matriz = inicializar_matriz(9, 9, 0)
-generar_sudoku(matriz)
-mostrar_sudoku(matriz)
-sudoku = ocultar_celdas(matriz)
-
 # Ventana
 pantalla = pygame.display.set_mode(DIMENSIONES_PANTALLA)
 pygame.display.set_caption("SUDOKU")
 
-FUENTE = pygame.font.Font(None, 74)
+#FUENTE = pygame.font.Font(None, 74)
 mi_evento_segundo = pygame.USEREVENT + 1
 un_segundo = 1000
 pygame.time.set_timer(mi_evento_segundo, un_segundo)
 
+mi_evento_minuto = pygame.USEREVENT + 2
+un_minuto = 60000
+pygame.time.set_timer(mi_evento_minuto, un_minuto)
+
+
+######## BORRAR ###################
 tupla = ("", 0, 0)
 tiempo, segundos, minutos = tupla
 errores = 0
+input_rect = pygame.Rect(520, 325, 300, 50)
+
 
 # Diccionario Global
 estado_juego = {
     'pantalla': pantalla,
-    'sudoku': sudoku,
-    'solucion': matriz,
+    'tablero_armado': False,
+    'solucion': None,
+    'sudoku':  None,
     'estado': "inicio",
     'dificultad': "facil",
+    'dificultad_calculada': False,
     'tiempo': "",
     'errores': 0,
     'segundos': 0,
     'minutos': 0,
     'celda_seleccionada': None,
     'user': "Player",
-    'puntaje': 0
+    'puntaje': PUNTAJE_BASE,
+    'puntos_calculados': False,
+    'activo_input': False,
+    'input_rect': input_rect,
+    'ranking': leer_json('datos.json'),
 }
 
-estado_juego['celdas_bloqueadas'] = inicializar_celdas_bloqueadas(estado_juego['sudoku'])
 estado_juego['colores_celdas'] = {}
+
 
 musica_actual = None
 
@@ -59,34 +68,69 @@ while True:
             if (estado_juego['estado'] == "jugar" or estado_juego['estado'] == "configuracion" or estado_juego['estado'] == "puntajes") and volver_rect.collidepoint(pygame.mouse.get_pos()):
                 estado_juego['estado'] = "inicio"
             if estado_juego['estado'] == "jugar" and reset_rect.collidepoint(pygame.mouse.get_pos()):
-                estado_juego['sudoku'] = inicializar_tablero_sudoku()
-                estado_juego['celdas_bloqueadas'] = inicializar_celdas_bloqueadas(estado_juego['sudoku'])
-                estado_juego['colores_celdas'] = {}
-                estado_juego['errores'] = 0
-                estado_juego['tiempo'], estado_juego['segundos'], estado_juego['minutos'] = "", 0, 0
+                resetear_juego(estado_juego)
             if estado_juego['estado'] == "jugar":
                 detectar_click(estado_juego, evento)
+            if estado_juego['estado'] == "win":
+                if volver_rect.collidepoint(pygame.mouse.get_pos()):
+                    estado_juego['estado'] = "inicio"
+                    resetear_juego(estado_juego)
+            if estado_juego['estado'] == 'configuracion':
+                validar_colisiones_configuraciones(evento, OPCIONES_CONFIG, estado_juego)
         if evento.type == pygame.KEYDOWN:
             ingresar_numero(estado_juego, evento)
         if evento.type == mi_evento_segundo and estado_juego['estado'] == "jugar":
             estado_juego['tiempo'], estado_juego['segundos'], estado_juego['minutos'] = calcular_tiempo_jugado(estado_juego['segundos'], estado_juego['minutos'])
+        if evento.type == mi_evento_minuto and estado_juego['estado'] == "jugar":
+            estado_juego['puntaje'] -= PENALIZACION_POR_TIEMPO
+
+        if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:
+            if estado_juego['input_rect'].collidepoint(evento.pos):
+                estado_juego['activo_input'] = True
+                if estado_juego['user'] == "Player":
+                        estado_juego['user'] = ""
+        elif evento.type == pygame.KEYDOWN:
+            if estado_juego['activo_input']:
+                if evento.key == pygame.K_BACKSPACE:
+                    estado_juego['user'] = estado_juego['user'][:-1]
+                elif evento.key == pygame.K_RETURN:
+                    print(estado_juego['user'])
+                    estado_juego['activo_input'] = False
+                else:
+                    estado_juego['user'] += evento.unicode
+    if estado_juego['estado'] != "configuracion":
+        estado_juego['activo_input'] = False
 
     if estado_juego['estado'] == "inicio":
         pantalla_menu(evento, estado_juego)  
         musica_actual = validar_musica(musica_actual, MUSICA_MENU)
     elif estado_juego['estado'] == "jugar":
+        if estado_juego['tablero_armado'] == False:
+            solucion = generar_sudoku()
+            sudoku = ocultar_celdas(solucion, estado_juego['dificultad'])
+            estado_juego['solucion'] = solucion
+            estado_juego['sudoku'] = sudoku
+            estado_juego['celdas_bloqueadas'] = inicializar_celdas_bloqueadas(estado_juego['sudoku'])
+            estado_juego['tablero_armado'] = True
+        if estado_juego['dificultad_calculada'] == False:
+            estado_juego['puntaje'] = calcular_dificultad(estado_juego)
+            estado_juego['dificultad_calculada'] = True
         musica_actual = validar_musica(musica_actual, MUSICA_JUEGO)
         pantalla_juego(estado_juego)
     elif estado_juego['estado'] == "configuracion":
         pantalla_configuracion(estado_juego)
     elif estado_juego['estado'] == "puntajes":
+        ordenar_ranking(estado_juego['ranking'])
         pantalla_puntajes(estado_juego)
+    elif estado_juego['estado'] == 'win':
+        pantalla_win(estado_juego)
+    
+    if estado_juego['tablero_armado'] != False:
+        if verificar_victoria(estado_juego) and estado_juego['estado'] == "jugar":
+            estado_juego['estado'] = "win"
+            if estado_juego['puntos_calculados'] == False:
+                escribir_json('datos.json', estado_juego)
+                estado_juego['puntos_calculados'] = True
         
-    if verificar_victoria(estado_juego):
-        estado_juego['puntaje'] == 1000
-        calcular_puntajes(estado_juego)
-        #mostrar_mensaje("Ganaste! :D", estado_juego['pantalla'])
-
-
     # Actualizamos la pantalla
     pygame.display.flip()

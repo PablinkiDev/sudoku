@@ -1,0 +1,44 @@
+[
+    {
+        "user": "Pedro",
+        "points": 160.0,
+        "minutos": 2,
+        "errores": 0
+    },
+    {
+        "user": "Juan",
+        "points": 1620.0,
+        "minutos": 2,
+        "errores": 0
+    },
+    {
+        "user": "Agustin",
+        "points": 1640.0,
+        "minutos": 2,
+        "errores": 0
+    },
+    {
+        "user": "Lucas",
+        "points": 16.0,
+        "minutos": 2,
+        "errores": 0
+    },
+    {
+        "user": "Roberto",
+        "points": 1500.0,
+        "minutos": 2,
+        "errores": 0
+    },
+    {
+        "user": "Messi",
+        "points": 2000.0,
+        "minutos": 2,
+        "errores": 0
+    },
+    {
+        "user": "Cabral",
+        "points": 9500.0,
+        "minutos": 2,
+        "errores": 0
+    }
+]
