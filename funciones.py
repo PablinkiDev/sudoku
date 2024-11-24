@@ -127,3 +127,18 @@ def validar_musica(musica_actual, musica_a_validar):
             musica_a_validar.play(-1)
             musica_actual = musica_a_validar
     return musica_actual
+
+def calcular_puntajes(estado_juego)->int:
+    penalizacion_error = 50
+    penalizacion_tiempo = 10
+
+    if estado_juego['dificultad'] == "facil":
+        dificultad = 1.0
+    elif estado_juego['dificultad'] == "intermedio":
+        dificultad = 1.5
+    elif estado_juego['dificultad'] == "dificil":
+        dificultad = 2.0
+    
+    
+    puntaje = (estado_juego['puntaje'] - (estado_juego['errores'] * penalizacion_error) - (estado_juego['minutos'] * penalizacion_tiempo))  * dificultad
+    print(puntaje)

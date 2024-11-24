@@ -44,6 +44,7 @@ LINEAS_CELDAS = "#71828a"
 CELDA_RESUELTA = "#abb6ba"
 CELDA_VACIA = "#c8d5db"
 
+
 # MUSICA
 pygame.mixer.init()
 MUSICA_MENU = pygame.mixer.Sound("music/intro.mp3")

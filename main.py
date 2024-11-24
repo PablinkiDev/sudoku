@@ -39,7 +39,8 @@ estado_juego = {
     'segundos': 0,
     'minutos': 0,
     'celda_seleccionada': None,
-    'user': "Player"
+    'user': "Player",
+    'puntaje': 0
 }
 
 estado_juego['celdas_bloqueadas'] = inicializar_celdas_bloqueadas(estado_juego['sudoku'])
@@ -82,7 +83,9 @@ while True:
         pantalla_puntajes(estado_juego)
         
     if verificar_victoria(estado_juego):
-        mostrar_mensaje("Ganaste! :D", estado_juego['pantalla'])
+        estado_juego['puntaje'] == 1000
+        calcular_puntajes(estado_juego)
+        #mostrar_mensaje("Ganaste! :D", estado_juego['pantalla'])
 
 
     # Actualizamos la pantalla
