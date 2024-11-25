@@ -1,7 +1,6 @@
 import pygame
 from constantes import *
 from imagenes import cargar_imagen, DICCIONARIO_IMAGENES
-from logica_sudoku import inicializar_tablero_sudoku
 from funciones import mostrar_mensaje
 
 
@@ -45,7 +44,7 @@ def pantalla_win(estado_juego):
     
 def dibujar_input(estado_juego):
     font = pygame.font.Font(None, 32)
-    mostrar_mensaje("Nombre de usuario", estado_juego['pantalla'], (670, 300), "white", 30)
+    mostrar_mensaje("Nombre de usuario", estado_juego['pantalla'], (670, 300), BLANCO, 30)
     
     if estado_juego['input_rect'].collidepoint(pygame.mouse.get_pos()):
         pygame.draw.rect(estado_juego['pantalla'], "#5c6066", estado_juego['input_rect'])
@@ -55,10 +54,10 @@ def dibujar_input(estado_juego):
         
     if estado_juego['activo_input'] == True:
         pygame.draw.rect(estado_juego['pantalla'], "#333333", estado_juego['input_rect'])  # Fondo gris del input
-        text_surface = font.render(estado_juego['user'], True, "red")
+        text_surface = font.render(estado_juego['user'], True, BLANCO)
         estado_juego['pantalla'].blit(text_surface, (estado_juego['input_rect'].x + 10, estado_juego['input_rect'].y + 10))  # Posición del texto
 
-def pantalla_menu(eventos, estado_juego):
+def pantalla_menu(estado_juego):
     """
     Esta funcion se encarga de dibujar la pantalla del menu.
     """
@@ -99,7 +98,7 @@ def pantalla_juego(estado_juego:dict):
     texto_puntaje = f"Score: {str(estado_juego['puntaje'])}"
     if estado_juego['puntaje'] < 0:
         estado_juego['puntaje'] = 0
-    texto_puntaje = fuente.render(texto_puntaje, True, "red")
+    texto_puntaje = fuente.render(texto_puntaje, True, BLANCO)
     
     
     dibujar_temporizador(estado_juego)

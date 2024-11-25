@@ -30,8 +30,6 @@ Se agrego:
     Al resetear el juego, se generaba un tablero nuevo, pero la matriz de la solución no cambiaba nunca. 
     Por lo tanto el juego seguia teniendo la misma solucion, rompiendo las reglas del Sudoku.
 - Se agrego un input para que el usuario ingrese su nombre.
-    ❌ Falta mostrar el nombre después de ingresarlo en el input.
-    ❌ Falta tener un nombre por defecto.
 - Se agregaron los puntajes:
     - Agregamos constantes para cada valor numerico fijo a manejar.
     - Mostramos el puntaje en vivo durante la partida.

@@ -102,7 +102,7 @@ while True:
         estado_juego['activo_input'] = False
 
     if estado_juego['estado'] == "inicio":
-        pantalla_menu(evento, estado_juego)  
+        pantalla_menu(estado_juego)  
         musica_actual = validar_musica(musica_actual, MUSICA_MENU)
     elif estado_juego['estado'] == "jugar":
         if estado_juego['tablero_armado'] == False:
