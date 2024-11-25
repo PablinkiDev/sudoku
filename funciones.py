@@ -79,7 +79,7 @@ def detectar_click(estado_juego, evento):
         mouse_x, mouse_y = evento.pos
 
         # Verificar si el clic está dentro del tablero
-        if tablero_x <= mouse_x <= tablero_x + 9 * cell_size and tablero_y <= mouse_y <= tablero_y + 9 * cell_size:
+        if (tablero_x <= mouse_x and mouse_x <= (tablero_x + 9 * cell_size)) and (tablero_y <= mouse_y and mouse_y <= (tablero_y + 9 * cell_size)):
             # Calcular las coordenadas de la celda
             columna = (mouse_x - tablero_x) // cell_size
             fila = (mouse_y - tablero_y) // cell_size
