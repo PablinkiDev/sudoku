@@ -70,7 +70,7 @@ while True:
             if estado_juego['estado'] == "jugar" and reset_rect.collidepoint(pygame.mouse.get_pos()):
                 resetear_juego(estado_juego)
             if estado_juego['estado'] == "jugar":
-                detectar_click(estado_juego, evento)
+                detectar_click(estado_juego, evento) # Cambia celda seleccionada
             if estado_juego['estado'] == "win":
                 if volver_rect.collidepoint(pygame.mouse.get_pos()):
                     estado_juego['estado'] = "inicio"
