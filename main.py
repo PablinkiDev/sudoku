@@ -25,6 +25,7 @@ estado_juego = {
     'sudoku':  None,
     'estado': "inicio",
     'dificultad': "facil",
+    'porcentaje_dif': 0.2,
     'dificultad_calculada': False,
     'tiempo': "",
     'errores': 0,
@@ -38,7 +39,8 @@ estado_juego = {
     'input_rect': input_rect,
     'ranking': leer_json('datos.json'),
     'musica_actual': None,
-    'colores_celdas': {}
+    'colores_celdas': {},
+    'dark_mode': True
 }
 
 while True:
@@ -88,7 +90,7 @@ while True:
     elif estado_juego['estado'] == "jugar":
         if estado_juego['tablero_armado'] == False:
             solucion = generar_sudoku()
-            sudoku = ocultar_celdas(solucion, estado_juego['dificultad'])
+            sudoku = ocultar_celdas(solucion, estado_juego['porcentaje_dif'])
             estado_juego['solucion'] = solucion
             estado_juego['sudoku'] = sudoku
             estado_juego['celdas_bloqueadas'] = inicializar_celdas_bloqueadas(estado_juego['sudoku'])
