@@ -93,7 +93,7 @@ def pantalla_juego(estado_juego:dict):
     No retorna nada.
     """
     fuente = pygame.font.SysFont(None, 50)
-    estado_juego['pantalla'].blit(cargar_imagen("img\ingame.jpg"), (0, 0))
+    estado_juego['pantalla'].blit(cargar_imagen("img\ingame.jpg"), (0, 0)) # Fondo
     errores = str(estado_juego['errores'])
     texto_puntaje = f"Score: {str(estado_juego['puntaje'])}"
     if estado_juego['puntaje'] < 0:

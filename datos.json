@@ -25,7 +25,7 @@
     },
     {
         "user": "Roberto",
-        "points": 1500.0,
+        "points": 1583.0,
         "minutos": 2,
         "errores": 0
     },
@@ -37,31 +37,31 @@
     },
     {
         "user": "Cabral",
-        "points": 958.0,
+        "points": 1043.0,
         "minutos": 2,
         "errores": 0
     },
     {
         "user": "",
-        "points": 905.0,
+        "points": 958.0,
         "minutos": 0,
         "errores": 82
     },
     {
         "user": "Pablinki",
-        "points": 160.0,
+        "points": 948.0,
         "minutos": 1,
         "errores": 2
     },
     {
         "user": "Agustin",
-        "points": 16.0,
+        "points": 925.0,
         "minutos": 0,
         "errores": 73
     },
     {
         "user": "Agustin",
-        "points": 1043.0,
+        "points": 905.0,
         "minutos": 0,
         "errores": 77
     },
@@ -70,5 +70,23 @@
         "points": 900.0,
         "minutos": 0,
         "errores": 76
+    },
+    {
+        "user": "",
+        "points": 160.0,
+        "minutos": 0,
+        "errores": 71
+    },
+    {
+        "user": "",
+        "points": 16.0,
+        "minutos": 0,
+        "errores": 66
+    },
+    {
+        "user": "",
+        "points": 843.0,
+        "minutos": 0,
+        "errores": 87
     }
 ]
