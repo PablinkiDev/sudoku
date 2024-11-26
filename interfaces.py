@@ -8,7 +8,9 @@ def dibujar_ranking(estado_juego):
     FUENTE = pygame.font.Font(None, 72)
     x = 380
     y = 250
-    for i in range(5):
+    for i in range(len(estado_juego['ranking'])):
+        if i == 5:
+            break
         top = i + 1
         if top == 1:
             color = ORO
@@ -37,7 +39,7 @@ def pantalla_win(estado_juego):
             estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
     
     mostrar_mensaje(f"Felicidad {estado_juego['user']} por completar el Sudoku", estado_juego['pantalla'], (670, 315), BLANCO, 50)
-    mostrar_mensaje(f"Tardaste {estado_juego['minutos']} minutos", estado_juego['pantalla'], (670, 370), BLANCO, 50)
+    mostrar_mensaje(f"Tardaste {estado_juego['tiempo']}", estado_juego['pantalla'], (670, 370), BLANCO, 50)
     mostrar_mensaje(f"Hiciste {estado_juego['puntaje']} puntos", estado_juego['pantalla'], (670, 420), BLANCO, 50)
     mostrar_mensaje(f"Tuviste {estado_juego['errores']} errores", estado_juego['pantalla'], (670, 470), BLANCO, 50)
     
@@ -54,8 +56,9 @@ def dibujar_input(estado_juego):
         
     if estado_juego['activo_input'] == True:
         pygame.draw.rect(estado_juego['pantalla'], "#333333", estado_juego['input_rect'])  
-        text_surface = font.render(estado_juego['user'], True, BLANCO)
-        estado_juego['pantalla'].blit(text_surface, (estado_juego['input_rect'].x + 10, estado_juego['input_rect'].y + 10)) 
+        
+    text_surface = font.render(estado_juego['user'], True, BLANCO)
+    estado_juego['pantalla'].blit(text_surface, (estado_juego['input_rect'].x + 10, estado_juego['input_rect'].y + 10)) 
 
 def pantalla_menu(estado_juego):
     """
@@ -168,13 +171,13 @@ def dibujar_tablero(estado_juego:dict):
             value = estado_juego['sudoku'][i][j]
             numero = fuente.render(str(estado_juego['sudoku'][i][j]), True, "black")
             
+            
             if (i, j) in estado_juego['colores_celdas']:
                 color = estado_juego['colores_celdas'][(i, j)]
             elif (i, j) in estado_juego['celdas_bloqueadas']:
                 color = CELDA_RESUELTA
             elif estado_juego['celda_seleccionada'] == (i, j):
-                color = "#BBDEFB"
-                
+                color = CELDA_SELECCIONADA
             else:
                 color = CELDA_VACIA
 

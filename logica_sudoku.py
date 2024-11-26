@@ -120,6 +120,7 @@ def ocultar_celdas(matriz:list[list[int]], dificultad):
     elif dificultad == 'dificil':
         cantidad_celdas_a_ocultar = int(81 * 0.6)
     
+    cantidad_celdas_a_ocultar = 4
     for _ in range(cantidad_celdas_a_ocultar):
         fila = random.randint(0,8)
         columna = random.randint(0,8)
@@ -128,20 +129,6 @@ def ocultar_celdas(matriz:list[list[int]], dificultad):
             columna = random.randint(0,8)
         copia_tablero[fila][columna] = " "
     return copia_tablero
-
-
-def inicializar_tablero_sudoku():
-    """
-    Esta funcion se encarga de inicializar el tablero de una matriz.
-    Trabaja con las funciones inicializar_matriz, generar_sudoku y ocultar_celdas.
-    No recibe parametros.
-    Retorna: ocultar_celdas(matriz) -> Matriz lista para jugar al Sudoku 
-    """
-    matriz = inicializar_matriz(9, 9, 0)
-    generar_sudoku(matriz)
-    mostrar_sudoku(matriz)
-    print(type(matriz))
-    return ocultar_celdas(matriz)
 
 def verificar_victoria(estado_juego):
     bandera = True
