@@ -59,7 +59,34 @@ Corregir:
 - ✅ Chequear ordenamiento puntajes 
 - ✅ Limpiar funciones que no utilicemos
 - Modificar funciones a cosas vistas en la cursada (1 return, sin doble asignacion, etc)
+- La funcion de dificultad debe recibir un porcentaje como parametro
 
 Importante:
 - Modularizar y Documentar.
+
+
+
+Prueba de penalizacion por tiempo:
+
+Sin jugar: 1200 puntos
+0:54 baja a 1198 puntos
+1:54 baja a 1196 puntos
+2:54 baja a 1194 puntos
+
+Empiezo a jugar la min: 3:25
+3:25 sube a 1199 puntos
+3:54 baja a 1197
+
+Prueba 2:
+Jugue: 00:15 sube a 1205
+0:59 bajo a 1203
+1:59 bajo a 1201
+
+Prueba 3 reiniciando desde el boton del game:
+0:49 bajo a 1198
+1:49 bajo a 1196
+
+Prueba 4 reiniciando desde el boton del game al min 2:30
+00:19 bajo a 1198
+01:19 bajo a 1196
 

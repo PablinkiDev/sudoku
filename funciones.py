@@ -42,9 +42,10 @@ def validar_colisiones_configuraciones(evento, opciones, estado_juego):
                 elif estado_juego['dificultad'] == 'dificil':
                     opcion["texto"] = f"Dificultad {DIFICULTADES[0]}"
                     estado_juego['dificultad'] = 'facil'
-                resetear_juego(estado_juego)
+                if estado_juego['sudoku'] != None:
+                    resetear_juego(estado_juego)
 
-def calcular_tiempo_jugado(segundos, minutos):
+def calcular_tiempo_jugado(segundos, minutos, estado_juego):
     """
     Esta funcion se encarga de calcular el tiempo que lleva transcurrido el juego.
     Recibe segundos y minutos inicializados en 0.
@@ -57,6 +58,7 @@ def calcular_tiempo_jugado(segundos, minutos):
     if segundos >= 60:
         minutos += 1
         segundos = 0
+        estado_juego['puntaje'] -= PENALIZACION_POR_TIEMPO
     if minutos < 10:
         cadena_minutos = "0" + str(minutos)
     else:
