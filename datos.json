@@ -40,5 +40,11 @@
         "points": 9500.0,
         "minutos": 2,
         "errores": 0
+    },
+    {
+        "user": "",
+        "points": 900.0,
+        "minutos": 0,
+        "errores": 76
     }
 ]

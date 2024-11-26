@@ -174,7 +174,8 @@ def dibujar_tablero(estado_juego:dict):
             elif (i, j) in estado_juego['celdas_bloqueadas']:
                 color = CELDA_RESUELTA
             elif estado_juego['celda_seleccionada'] == (i, j):
-                color = "yellow"
+                color = "#BBDEFB"
+                
             else:
                 color = CELDA_VACIA
 
