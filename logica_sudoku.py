@@ -89,12 +89,12 @@ def validar_numero_sudoku(matriz, numero, fila, columna):
                 break
     
     if valido:  
-        subcuadrícula_fila_inicio = (fila // 3) * 3
+        subcuadricula_fila_inicio = (fila // 3) * 3
         subcuadrícula_columna_inicio = (columna // 3) * 3
         
         for i in range(3):
             for j in range(3):
-                if matriz[subcuadrícula_fila_inicio + i][subcuadrícula_columna_inicio + j] == numero:
+                if matriz[subcuadricula_fila_inicio + i][subcuadrícula_columna_inicio + j] == numero:
                     valido = False
                     break
             if not valido:  

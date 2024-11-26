@@ -105,6 +105,7 @@ def ingresar_numero(estado_juego, evento):
                     estado_juego['sudoku'][fila][columna] = numero_ingresado
                     estado_juego['colores_celdas'][(fila, columna)] = COLOR_CORRECTO
                     estado_juego['puntaje'] += BONIFICACION_POR_ACIERTO
+                    estado_juego['celdas_bloqueadas'].append((fila, columna))
                 else:
                     estado_juego['sudoku'][fila][columna] = numero_ingresado
                     estado_juego['colores_celdas'][(fila, columna)] = COLOR_ERROR
