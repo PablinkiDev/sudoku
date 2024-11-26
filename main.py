@@ -22,11 +22,6 @@ mi_evento_minuto = pygame.USEREVENT + 2
 un_minuto = 60000
 pygame.time.set_timer(mi_evento_minuto, un_minuto)
 
-
-######## BORRAR ###################
-tupla = ("", 0, 0)
-tiempo, segundos, minutos = tupla
-errores = 0
 input_rect = pygame.Rect(520, 325, 300, 50)
 
 
@@ -50,12 +45,9 @@ estado_juego = {
     'activo_input': False,
     'input_rect': input_rect,
     'ranking': leer_json('datos.json'),
+    'musica_actual': None,
+    'colores_celdas': {}
 }
-
-estado_juego['colores_celdas'] = {}
-
-
-musica_actual = None
 
 while True:
     for evento in pygame.event.get():
@@ -78,24 +70,24 @@ while True:
             if estado_juego['estado'] == 'configuracion':
                 validar_colisiones_configuraciones(evento, OPCIONES_CONFIG, estado_juego)
         if evento.type == pygame.KEYDOWN:
-            # Solo para la pantalla del juego
-            ingresar_numero(estado_juego, evento)
+            if estado_juego['estado'] == 'jugar':
+                ingresar_numero(estado_juego, evento)
         if evento.type == mi_evento_segundo and estado_juego['estado'] == "jugar":
             estado_juego['tiempo'], estado_juego['segundos'], estado_juego['minutos'] = calcular_tiempo_jugado(estado_juego['segundos'], estado_juego['minutos'])
         if evento.type == mi_evento_minuto and estado_juego['estado'] == "jugar":
             estado_juego['puntaje'] -= PENALIZACION_POR_TIEMPO
 
-        if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:
-            if estado_juego['input_rect'].collidepoint(evento.pos):
-                estado_juego['activo_input'] = True
-                if estado_juego['user'] == "Player":
-                        estado_juego['user'] = ""
+        if estado_juego['estado'] == 'configuracion':
+            if evento.type == pygame.MOUSEBUTTONDOWN and evento.button == 1:
+                if estado_juego['input_rect'].collidepoint(evento.pos):
+                    estado_juego['activo_input'] = True
+                    if estado_juego['user'] == "Player":
+                            estado_juego['user'] = ""
         elif evento.type == pygame.KEYDOWN:
             if estado_juego['activo_input']:
                 if evento.key == pygame.K_BACKSPACE:
                     estado_juego['user'] = estado_juego['user'][:-1]
                 elif evento.key == pygame.K_RETURN:
-                    print(estado_juego['user'])
                     estado_juego['activo_input'] = False
                 else:
                     estado_juego['user'] += evento.unicode
@@ -104,7 +96,7 @@ while True:
 
     if estado_juego['estado'] == "inicio":
         pantalla_menu(estado_juego)  
-        musica_actual = validar_musica(musica_actual, MUSICA_MENU)
+        estado_juego['musica_actual'] = validar_musica(estado_juego['musica_actual'], MUSICA_MENU)
     elif estado_juego['estado'] == "jugar":
         if estado_juego['tablero_armado'] == False:
             solucion = generar_sudoku()
@@ -116,7 +108,7 @@ while True:
         if estado_juego['dificultad_calculada'] == False:
             estado_juego['puntaje'] = calcular_dificultad(estado_juego)
             estado_juego['dificultad_calculada'] = True
-        musica_actual = validar_musica(musica_actual, MUSICA_JUEGO)
+        estado_juego['musica_actual'] = validar_musica(estado_juego['musica_actual'], MUSICA_JUEGO)
         pantalla_juego(estado_juego)
     elif estado_juego['estado'] == "configuracion":
         pantalla_configuracion(estado_juego)

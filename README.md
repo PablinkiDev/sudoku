@@ -40,3 +40,26 @@ Se agrego:
     - Boton para volver al menu
 - Se agrego la funcionalidad de cambiar la dificultad en la configuracion.
 - Se agrego pantalla de puntajes con el TOP 5.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Corregir:
+- ✅ Que las celdas al borrase vuelvan a su color original
+- ❗ Al finalizar la partida mostrar la cadena minutos y segundos 
+- ✅ Que el evento de ingresar numeros solo este en la pantalla del juego. 
+- ✅ Una vez ingresado un numero correcto no pueda cambiarse, ni exploitearse para sumarse mas puntos. 
+- ✅ Que se muestre el nombre en el input 
+- ✅ Si gana un jugador y su nombre ya existe en el archivo, debe quedar el puntaje más alto. 
+- ✅ Player por defecto. 
+- ✅ Reinciar el tablero cuando cambia de dificultad 
+- Que al seleccionar una celda con un valor ingresado se pinte para avisarle al usuario que la selecciono
+- ✅ Limpiar el main
+- Validar lectura y escritura de archivo
+- Chequear penalizacion por minuto
+- ✅ Chequear ordenamiento puntajes 
+- ✅ Limpiar funciones que no utilicemos
+- Modificar funciones a cosas vistas en la cursada (1 return, sin doble asignacion, etc)
+
+Importante:
+- Modularizar y Documentar.
+

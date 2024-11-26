@@ -42,6 +42,7 @@ def validar_colisiones_configuraciones(evento, opciones, estado_juego):
                 elif estado_juego['dificultad'] == 'dificil':
                     opcion["texto"] = f"Dificultad {DIFICULTADES[0]}"
                     estado_juego['dificultad'] = 'facil'
+                resetear_juego(estado_juego)
 
 def calcular_tiempo_jugado(segundos, minutos):
     """
@@ -92,15 +93,15 @@ def ingresar_numero(estado_juego, evento):
     """
     Permite al usuario ingresar un número en la celda seleccionada.
     """
-    if estado_juego['celda_seleccionada'] is not None:
+    if estado_juego['celda_seleccionada']:
         fila, columna = estado_juego['celda_seleccionada']
         
         # Verificar si el evento corresponde a un número del 1 al 9
         if (fila, columna) not in estado_juego['celdas_bloqueadas']:
             if evento.unicode.isdigit() and 1 <= int(evento.unicode) <= 9:
                 numero_ingresado = int(evento.unicode)
+
                 
-                # Validar el número ingresado
                 if numero_ingresado == estado_juego['solucion'][fila][columna]:
                     estado_juego['sudoku'][fila][columna] = numero_ingresado
                     estado_juego['colores_celdas'][(fila, columna)] = COLOR_CORRECTO
@@ -113,6 +114,7 @@ def ingresar_numero(estado_juego, evento):
                     estado_juego['puntaje'] -= PENALIZACION_POR_ERRORES
             elif evento.key == pygame.K_BACKSPACE:
                 estado_juego['sudoku'][fila][columna] = " "  # Borrar el contenido de la celda
+                estado_juego['colores_celdas'].pop((fila, columna), None)
 
 def inicializar_celdas_bloqueadas(tablero):
     """
@@ -163,10 +165,10 @@ def calcular_dificultad(estado_juego):
 def ordenar_ranking(lista_ranking):
     for i in range(len(lista_ranking) - 1):
         for j in range(i + 1, len(lista_ranking)):
-            if lista_ranking[i]['points'] < lista_ranking[j]['points']:
-                aux = lista_ranking[j]['points']
-                lista_ranking[j]['points'] = lista_ranking[i]['points']
-                lista_ranking[i]['points'] = aux
+            if lista_ranking[i]['points'] < lista_ranking[j]['points']:  
+                aux = lista_ranking[j]
+                lista_ranking[j] = lista_ranking[i]
+                lista_ranking[i] = aux
 
 def leer_json(ruta):
     with open(ruta, "r") as archivo:
@@ -176,19 +178,31 @@ def leer_json(ruta):
 
 
 def escribir_json(ruta, estado_juego):
-    data = {
+    data_user = {
         "user": estado_juego['user'],
         "points": estado_juego['puntaje'],
         "minutos": estado_juego['minutos'],
         "errores": estado_juego['errores']
     }
     
-    estado_juego['ranking'].append(data)
+    agregar_usuario(estado_juego['ranking'], data_user)
     
     with open(ruta, "w") as archivo:
         json.dump(estado_juego['ranking'], archivo, indent=4)
         
+
+def agregar_usuario(ranking:list, data_user):
+    se_encontro_user = False
+    for i in range(len(ranking)):
+        if ranking[i]['user'] == data_user['user']:
+            ranking[i]['points'] = data_user['points']
+            ranking[i]['minutos'] = data_user['minutos']
+            ranking[i]['errores'] = data_user['errores']
+            se_encontro_user = True
         
+    if se_encontro_user != True:
+        ranking.append(data_user)
+
 def resetear_juego(estado_juego):
     estado_juego['tablero_armado'] = False
     estado_juego['puntaje'] = PUNTAJE_BASE

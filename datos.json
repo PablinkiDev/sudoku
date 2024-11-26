@@ -1,92 +1,14 @@
 [
     {
         "user": "Pedro",
-        "points": 9500.0,
+        "points": 1500.0,
         "minutos": 2,
         "errores": 0
     },
     {
-        "user": "Juan",
-        "points": 2000.0,
-        "minutos": 2,
-        "errores": 0
-    },
-    {
-        "user": "Agustin",
-        "points": 1640.0,
-        "minutos": 2,
-        "errores": 0
-    },
-    {
-        "user": "Lucas",
-        "points": 1620.0,
-        "minutos": 2,
-        "errores": 0
-    },
-    {
-        "user": "Roberto",
-        "points": 1583.0,
-        "minutos": 2,
-        "errores": 0
-    },
-    {
-        "user": "Messi",
-        "points": 1266.0,
-        "minutos": 2,
-        "errores": 0
-    },
-    {
-        "user": "Cabral",
-        "points": 1043.0,
-        "minutos": 2,
-        "errores": 0
-    },
-    {
-        "user": "",
-        "points": 958.0,
+        "user": "Player",
+        "points": 1165.0,
         "minutos": 0,
-        "errores": 82
-    },
-    {
-        "user": "Pablinki",
-        "points": 948.0,
-        "minutos": 1,
-        "errores": 2
-    },
-    {
-        "user": "Agustin",
-        "points": 925.0,
-        "minutos": 0,
-        "errores": 73
-    },
-    {
-        "user": "Agustin",
-        "points": 905.0,
-        "minutos": 0,
-        "errores": 77
-    },
-    {
-        "user": "",
-        "points": 900.0,
-        "minutos": 0,
-        "errores": 76
-    },
-    {
-        "user": "",
-        "points": 160.0,
-        "minutos": 0,
-        "errores": 71
-    },
-    {
-        "user": "",
-        "points": 16.0,
-        "minutos": 0,
-        "errores": 66
-    },
-    {
-        "user": "",
-        "points": 843.0,
-        "minutos": 0,
-        "errores": 87
+        "errores": 11
     }
 ]
