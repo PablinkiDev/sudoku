@@ -53,9 +53,9 @@ def dibujar_input(estado_juego):
         
         
     if estado_juego['activo_input'] == True:
-        pygame.draw.rect(estado_juego['pantalla'], "#333333", estado_juego['input_rect'])  # Fondo gris del input
+        pygame.draw.rect(estado_juego['pantalla'], "#333333", estado_juego['input_rect'])  
         text_surface = font.render(estado_juego['user'], True, BLANCO)
-        estado_juego['pantalla'].blit(text_surface, (estado_juego['input_rect'].x + 10, estado_juego['input_rect'].y + 10))  # Posición del texto
+        estado_juego['pantalla'].blit(text_surface, (estado_juego['input_rect'].x + 10, estado_juego['input_rect'].y + 10)) 
 
 def pantalla_menu(estado_juego):
     """

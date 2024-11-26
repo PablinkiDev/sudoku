@@ -78,6 +78,7 @@ while True:
             if estado_juego['estado'] == 'configuracion':
                 validar_colisiones_configuraciones(evento, OPCIONES_CONFIG, estado_juego)
         if evento.type == pygame.KEYDOWN:
+            # Solo para la pantalla del juego
             ingresar_numero(estado_juego, evento)
         if evento.type == mi_evento_segundo and estado_juego['estado'] == "jugar":
             estado_juego['tiempo'], estado_juego['segundos'], estado_juego['minutos'] = calcular_tiempo_jugado(estado_juego['segundos'], estado_juego['minutos'])

@@ -31,26 +31,38 @@
     },
     {
         "user": "Messi",
-        "points": 905.0,
+        "points": 1266.0,
         "minutos": 2,
         "errores": 0
     },
     {
         "user": "Cabral",
-        "points": 160.0,
+        "points": 958.0,
         "minutos": 2,
         "errores": 0
     },
     {
         "user": "",
-        "points": 16.0,
+        "points": 905.0,
         "minutos": 0,
         "errores": 82
     },
     {
         "user": "Pablinki",
-        "points": 1266.0,
+        "points": 160.0,
         "minutos": 1,
         "errores": 2
+    },
+    {
+        "user": "Agustin",
+        "points": 16.0,
+        "minutos": 0,
+        "errores": 73
+    },
+    {
+        "user": "Agustin",
+        "points": 1043.0,
+        "minutos": 0,
+        "errores": 77
     }
 ]
