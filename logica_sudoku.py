@@ -126,7 +126,6 @@ def ocultar_celdas(matriz:list[list[int]], dificultad):
     elif dificultad == 'dificil':
         cantidad_celdas_a_ocultar = int(81 * 0.6)
     
-    cantidad_celdas_a_ocultar = 4
     for _ in range(cantidad_celdas_a_ocultar):
         fila = random.randint(0,8)
         columna = random.randint(0,8)
