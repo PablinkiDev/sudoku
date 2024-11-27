@@ -113,7 +113,6 @@ def ingresar_numero(estado_juego, evento):
             if evento.unicode.isdigit() and 1 <= int(evento.unicode) <= 9:
                 numero_ingresado = int(evento.unicode)
 
-                
                 if numero_ingresado == estado_juego['solucion'][fila][columna]:
                     estado_juego['sudoku'][fila][columna] = numero_ingresado
                     estado_juego['colores_celdas'][(fila, columna)] = COLOR_CORRECTO

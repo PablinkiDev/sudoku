@@ -193,19 +193,31 @@ def dibujar_tablero(estado_juego:dict):
     fuente = pygame.font.SysFont(None, 32)
     celda_size = 60
     
+    # Identificar la fila, columna y submatriz 3x3 de la celda seleccionada
+    fila_sel, columna_sel = None, None  # Valores predeterminados
+    fila_base, columna_base = None, None
+
+    if estado_juego['celda_seleccionada']:
+        fila_sel, columna_sel = estado_juego['celda_seleccionada']
+        fila_base = (fila_sel // 3) * 3
+        columna_base = (columna_sel // 3) * 3
+    
     for i in range(9):
         for j in range(9):
             # Obtener el valor de la celda actual
             value = estado_juego['sudoku'][i][j]
             numero = fuente.render(str(estado_juego['sudoku'][i][j]), True, "black")
             
-            
-            if (i, j) in estado_juego['colores_celdas']:
+            if estado_juego['celda_seleccionada'] == (i, j) and (i, j) not in estado_juego['celdas_bloqueadas']:
+                color = CELDA_SELECCIONADA
+            elif (i, j) in estado_juego['colores_celdas']:
                 color = estado_juego['colores_celdas'][(i, j)]
+            elif fila_sel is not None and (i == fila_sel or j == columna_sel):
+                color = SOMBREADO_FILA_COLUMNA
+            elif fila_base is not None and fila_base <= i < fila_base + 3 and columna_base <= j < columna_base + 3:
+                color = SOMBREADO_SUBMATRIZ
             elif (i, j) in estado_juego['celdas_bloqueadas']:
                 color = CELDA_RESUELTA
-            elif estado_juego['celda_seleccionada'] == (i, j):
-                color = CELDA_SELECCIONADA
             else:
                 color = CELDA_VACIA
 

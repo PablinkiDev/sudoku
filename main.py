@@ -94,6 +94,7 @@ while True:
             estado_juego['solucion'] = solucion
             estado_juego['sudoku'] = sudoku
             estado_juego['celdas_bloqueadas'] = inicializar_celdas_bloqueadas(estado_juego['sudoku'])
+            estado_juego['celda_seleccionada'] = None
             estado_juego['tablero_armado'] = True
         if estado_juego['dificultad_calculada'] == False:
             estado_juego['puntaje'] = calcular_dificultad(estado_juego)
