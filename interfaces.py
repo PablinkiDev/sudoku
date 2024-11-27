@@ -171,7 +171,8 @@ def dibujar_tablero(estado_juego:dict):
             value = estado_juego['sudoku'][i][j]
             numero = fuente.render(str(estado_juego['sudoku'][i][j]), True, "black")
             
-            
+            # Si está dentro de colores_celdas es porque el jugador ya tipeó un número
+            # Seguirá dentro de colores_celdas hasta que lo saque 
             if (i, j) in estado_juego['colores_celdas']:
                 color = estado_juego['colores_celdas'][(i, j)]
             elif (i, j) in estado_juego['celdas_bloqueadas']:
