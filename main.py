@@ -40,7 +40,9 @@ estado_juego = {
     'ranking': leer_json('datos.json'),
     'musica_actual': None,
     'colores_celdas': {},
-    'dark_mode': True
+    'dark_mode': True,
+    'celdas_errores': [],
+    'celdas_aciertos': []
 }
 
 while True:

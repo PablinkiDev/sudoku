@@ -190,7 +190,7 @@ def dibujar_tablero(estado_juego:dict):
     No tiene retorn
     """
     #lista_coordenadas = []
-    fuente = pygame.font.SysFont(None, 32)
+    fuente = pygame.font.SysFont(None, 40)
     celda_size = 60
     
     # Identificar la fila, columna y submatriz 3x3 de la celda seleccionada
@@ -206,9 +206,18 @@ def dibujar_tablero(estado_juego:dict):
         for j in range(9):
             # Obtener el valor de la celda actual
             value = estado_juego['sudoku'][i][j]
-            numero = fuente.render(str(estado_juego['sudoku'][i][j]), True, "black")
             
-            if estado_juego['celda_seleccionada'] == (i, j) and (i, j) not in estado_juego['celdas_bloqueadas']:
+             # Determinar el color del texto según el estado de la celda
+            if (i, j) in estado_juego['celdas_errores']:
+                color_texto = CELDA_ERROR  # Color para errores
+            elif (i, j) in estado_juego['celdas_aciertos']:
+                color_texto = COLOR_CORRECTO  # Color para aciertos
+            else:
+                color_texto = NEGRO  # Color por defecto
+            
+            numero = fuente.render(str(estado_juego['sudoku'][i][j]), True, color_texto)
+            
+            if estado_juego['celda_seleccionada'] == (i, j):
                 color = CELDA_SELECCIONADA
             elif (i, j) in estado_juego['colores_celdas']:
                 color = estado_juego['colores_celdas'][(i, j)]
@@ -221,6 +230,7 @@ def dibujar_tablero(estado_juego:dict):
             else:
                 color = CELDA_VACIA
 
+                
             # Dibujar el rectángulo (celda)          j * celda_size + 200                   Y                 ANCHO     ALTO
             pygame.draw.rect(estado_juego['pantalla'], color, (j * celda_size + 400, i * celda_size + 100, celda_size, celda_size))
             # lista_coordenadas.append((j * celda_size + 400, i * celda_size + 100, celda_size, celda_size))

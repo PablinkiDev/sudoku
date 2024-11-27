@@ -60,6 +60,7 @@ Corregir:
 - ✅ Limpiar funciones que no utilicemos
 - Modificar funciones a cosas vistas en la cursada (1 return, sin doble asignacion, etc)
 - ✅ La funcion de dificultad debe recibir un porcentaje como parametro
+- Agregar limite de caracteres al input
 
 Importante:
 - Modularizar y Documentar.

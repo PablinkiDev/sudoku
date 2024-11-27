@@ -15,6 +15,16 @@ def cargar_imagen(ruta:str, dimensiones:int|None = None):
         imagen = pygame.transform.scale(imagen, dimensiones)
     return imagen
 
+def limpiar_lista_tuplas(lista_tuplas, fila, columna):
+    """
+    Elimina lista de tuplas todas las tuplas que sean iguales a la tupla que se pasa por parametro (fila, columna)
+    """
+    for i in range(len(lista_tuplas) - 1, -1, -1):
+        f, c = lista_tuplas[i]
+        if (f, c) == (fila, columna):
+            lista_tuplas.pop(i)
+
+
 def validar_colisiones_menu(evento, opciones, estado):
     """
     Esta funcion se encarga de validar las colisiones de los botonees del menu. Cuando se pulse un boton cambia el estado del juego.
@@ -123,17 +133,22 @@ def ingresar_numero(estado_juego, evento):
         if (fila, columna) not in estado_juego['celdas_bloqueadas']:
             if evento.unicode.isdigit() and 1 <= int(evento.unicode) <= 9:
                 numero_ingresado = int(evento.unicode)
-
                 if numero_ingresado == estado_juego['solucion'][fila][columna]:
+                    #print("Antes:", estado_juego['celdas_errores'])
+                    if (fila, columna) in estado_juego['celdas_errores']:
+                        limpiar_lista_tuplas(estado_juego['celdas_errores'], fila, columna)
+                        estado_juego['colores_celdas'].pop((fila, columna), None)
+                    #print("Después:", estado_juego['celdas_errores'])
                     estado_juego['sudoku'][fila][columna] = numero_ingresado
-                    estado_juego['colores_celdas'][(fila, columna)] = COLOR_CORRECTO
                     estado_juego['puntaje'] += BONIFICACION_POR_ACIERTO
                     estado_juego['celdas_bloqueadas'].append((fila, columna))
+                    estado_juego['celdas_aciertos'].append((fila, columna))
                 else:
                     estado_juego['sudoku'][fila][columna] = numero_ingresado
                     estado_juego['colores_celdas'][(fila, columna)] = COLOR_ERROR
                     estado_juego['errores'] += 1
                     estado_juego['puntaje'] -= PENALIZACION_POR_ERRORES
+                    estado_juego['celdas_errores'].append((fila, columna))
             elif evento.key == pygame.K_BACKSPACE:
                 estado_juego['sudoku'][fila][columna] = " "  # Borrar el contenido de la celda
                 estado_juego['colores_celdas'].pop((fila, columna), None)
@@ -228,3 +243,5 @@ def resetear_juego(estado_juego):
     estado_juego['errores'] = 0
     estado_juego['tiempo'], estado_juego['segundos'], estado_juego['minutos'] = "", 0, 0
     estado_juego['celdas_bloqueadas'] = inicializar_celdas_bloqueadas(estado_juego['sudoku'])
+    estado_juego['celdas_errores'] = []
+    estado_juego['celdas_aciertos'] = []
