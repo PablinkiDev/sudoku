@@ -7,8 +7,26 @@
     },
     {
         "user": "Player",
-        "points": 1165.0,
-        "minutos": 0,
-        "errores": 11
+        "points": 1053.0,
+        "minutos": 2,
+        "errores": 1
+    },
+    {
+        "user": "Aguschan",
+        "points": 1276.0,
+        "minutos": 2,
+        "errores": 0
+    },
+    {
+        "user": "Pro",
+        "points": 126.0,
+        "minutos": 2,
+        "errores": 0
+    },
+    {
+        "user": "Juansito",
+        "points": 106.0,
+        "minutos": 2,
+        "errores": 0
     }
 ]

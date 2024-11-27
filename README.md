@@ -55,11 +55,11 @@ Corregir:
 - Que al seleccionar una celda con un valor ingresado se pinte para avisarle al usuario que la selecciono
 - ✅ Limpiar el main
 - Validar lectura y escritura de archivo
-- Chequear penalizacion por minuto
+- ✅ Chequear penalizacion por minuto
 - ✅ Chequear ordenamiento puntajes 
 - ✅ Limpiar funciones que no utilicemos
 - Modificar funciones a cosas vistas en la cursada (1 return, sin doble asignacion, etc)
-- La funcion de dificultad debe recibir un porcentaje como parametro
+- ✅ La funcion de dificultad debe recibir un porcentaje como parametro
 
 Importante:
 - Modularizar y Documentar.

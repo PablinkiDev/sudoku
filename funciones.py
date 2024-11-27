@@ -35,15 +35,25 @@ def validar_colisiones_configuraciones(evento, opciones, estado_juego):
             if opcion['btn'] == 1: 
                 if estado_juego['dificultad'] == 'facil':
                     estado_juego['dificultad'] = "intermedio"
+                    estado_juego['porcentaje_dif'] = 0.4
                     opcion["texto"] = f"Dificultad {DIFICULTADES[1]}"
                 elif estado_juego['dificultad'] == 'intermedio':
                     estado_juego['dificultad'] = 'dificil'
+                    estado_juego['porcentaje_dif'] = 0.6
                     opcion["texto"] = f"Dificultad {DIFICULTADES[2]}"
                 elif estado_juego['dificultad'] == 'dificil':
                     opcion["texto"] = f"Dificultad {DIFICULTADES[0]}"
                     estado_juego['dificultad'] = 'facil'
+                    estado_juego['porcentaje_dif'] = 0.2
                 if estado_juego['sudoku'] != None:
                     resetear_juego(estado_juego)
+            elif opcion['btn'] == 3:
+                if estado_juego['dark_mode'] == True:
+                    opcion["texto"] = f"Modo oscuro: {DARK_MODE[1]}"
+                    estado_juego['dark_mode'] = False
+                elif estado_juego['dark_mode'] == False:
+                    opcion["texto"] = f"Modo oscuro: {DARK_MODE[0]}"
+                    estado_juego['dark_mode'] = True
 
 def calcular_tiempo_jugado(segundos, minutos, estado_juego):
     """
@@ -103,7 +113,6 @@ def ingresar_numero(estado_juego, evento):
             if evento.unicode.isdigit() and 1 <= int(evento.unicode) <= 9:
                 numero_ingresado = int(evento.unicode)
 
-                
                 if numero_ingresado == estado_juego['solucion'][fila][columna]:
                     estado_juego['sudoku'][fila][columna] = numero_ingresado
                     estado_juego['colores_celdas'][(fila, columna)] = COLOR_CORRECTO

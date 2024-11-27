@@ -19,7 +19,10 @@ def dibujar_ranking(estado_juego):
         elif top == 3:
             color = BRONCE
         else:
-            color = BLANCO
+            if estado_juego['dark_mode'] == True:
+                color = BLANCO
+            elif estado_juego['dark_mode'] == False:
+                color = NEGRO
         nombre = FUENTE.render(estado_juego['ranking'][i]['user'], True, color)
         puntos = FUENTE.render(str(estado_juego['ranking'][i]['points']), True, color)
         top_texto = FUENTE.render(str(top), True, color)
@@ -65,7 +68,10 @@ def pantalla_menu(estado_juego):
     Esta funcion se encarga de dibujar la pantalla del menu.
     """
     # estado_juego['pantalla'].fill(COLOR_FONDO)
-    estado_juego['pantalla'].blit(cargar_imagen("img/fondo.jpeg", (1280, 720)), (0, 0))
+    if estado_juego['dark_mode'] == True:
+        estado_juego['pantalla'].blit(cargar_imagen("img/fondo.jpeg", (1280, 720)), (0, 0))
+    elif estado_juego['dark_mode'] == False:
+        estado_juego['pantalla'].blit(cargar_imagen("img/fondo_claro.jpg", (1280, 720)), (0, 0))
     estado_juego['pantalla'].blit(cargar_imagen("img/logo.png", (600, 200)), (350, 40))
     fuente = pygame.font.Font(None, 40)
     dibujar_botones_menu(estado_juego['pantalla'], fuente, OPCIONES_MENU)
@@ -96,24 +102,39 @@ def pantalla_juego(estado_juego:dict):
     No retorna nada.
     """
     fuente = pygame.font.SysFont(None, 50)
+<<<<<<< HEAD
     estado_juego['pantalla'].blit(cargar_imagen("img\ingame.jpg"), (0, 0)) # Fondo
+=======
+    
+    if estado_juego['dark_mode'] == True:
+        estado_juego['pantalla'].blit(cargar_imagen("img\ingame.jpg"), (0, 0))
+        color = BLANCO
+    elif estado_juego['dark_mode'] == False:
+        estado_juego['pantalla'].blit(cargar_imagen("img\ingame_claro.webp"), (0, 0))
+        color = NEGRO
+>>>>>>> upstream/main
     errores = str(estado_juego['errores'])
     texto_puntaje = f"Score: {str(estado_juego['puntaje'])}"
     if estado_juego['puntaje'] < 0:
         estado_juego['puntaje'] = 0
-    texto_puntaje = fuente.render(texto_puntaje, True, BLANCO)
+    texto_puntaje = fuente.render(texto_puntaje, True, color)
     
     
     dibujar_temporizador(estado_juego)
     dibujar_tablero(estado_juego)
     
     fuente = pygame.font.SysFont(None, 50)
-    errores = fuente.render(errores, True, "white")
+    errores = fuente.render(errores, True, color)
     
     for elemento in DICCIONARIO_IMAGENES:
-        if elemento['nombre'] == "volver_white":
-            continue
-        estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
+        if estado_juego['dark_mode'] == False:
+            if elemento['nombre'] == "volver_white" or elemento['nombre'] == "reset_white":
+                continue
+            estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
+        elif estado_juego['dark_mode'] == True:
+            if elemento['nombre'] == "volver" or elemento['nombre'] == "reset":
+                continue
+            estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
     
     estado_juego['pantalla'].blit(errores, (580, 42))
     estado_juego['pantalla'].blit(texto_puntaje, (780, 42))
@@ -125,14 +146,20 @@ def pantalla_puntajes(estado_juego:dict):
     Recibe: estado_juego(dict): Diccionario con todos los elementos importantes del juego.
     No retorna nada
     """
-    estado_juego['pantalla'].blit(cargar_imagen("img/fondo.jpeg", (1280, 720)), (0, 0))
+    
+    if estado_juego['dark_mode'] == True:
+        estado_juego['pantalla'].blit(cargar_imagen("img/fondo.jpeg", (1280, 720)), (0, 0))
+    elif estado_juego['dark_mode'] == False:
+        estado_juego['pantalla'].blit(cargar_imagen("img/fondo_claro.jpg", (1280, 720)), (0, 0))
     estado_juego['pantalla'].blit(cargar_imagen("img/logo.png", (600, 200)), (350, 40))
     fuente = pygame.font.SysFont(None, 74)
     
     dibujar_ranking(estado_juego)
     
     for elemento in DICCIONARIO_IMAGENES:
-        if elemento['nombre'] == "volver_white":
+        if elemento['nombre'] == "volver_white" and estado_juego['dark_mode'] == True:
+            estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
+        elif elemento['nombre'] == "volver" and estado_juego['dark_mode'] == False:
             estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
 
 def pantalla_configuracion(estado_juego:dict):
@@ -143,14 +170,19 @@ def pantalla_configuracion(estado_juego:dict):
     """
     
     fuente = pygame.font.SysFont(None, 40)
-    estado_juego['pantalla'].blit(cargar_imagen("img/fondo.jpeg", (1280, 720)), (0, 0))
+    if estado_juego['dark_mode'] == True:
+        estado_juego['pantalla'].blit(cargar_imagen("img/fondo.jpeg", (1280, 720)), (0, 0))
+    elif estado_juego['dark_mode'] == False:
+        estado_juego['pantalla'].blit(cargar_imagen("img/fondo_claro.jpg", (1280, 720)), (0, 0))
     estado_juego['pantalla'].blit(cargar_imagen("img/logo.png", (600, 200)), (350, 40))
     
     dibujar_input(estado_juego)
     dibujar_botones_menu(estado_juego['pantalla'], fuente, OPCIONES_CONFIG)
     
     for elemento in DICCIONARIO_IMAGENES:
-        if elemento['nombre'] == "volver_white":
+        if elemento['nombre'] == "volver_white" and estado_juego['dark_mode'] == True:
+            estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
+        elif elemento['nombre'] == "volver" and estado_juego['dark_mode'] == False:
             estado_juego['pantalla'].blit(elemento["surface"], (elemento["posicion_x"], elemento["posicion_y"]))
     
 
@@ -165,20 +197,37 @@ def dibujar_tablero(estado_juego:dict):
     fuente = pygame.font.SysFont(None, 32)
     celda_size = 60
     
+    # Identificar la fila, columna y submatriz 3x3 de la celda seleccionada
+    fila_sel, columna_sel = None, None  # Valores predeterminados
+    fila_base, columna_base = None, None
+
+    if estado_juego['celda_seleccionada']:
+        fila_sel, columna_sel = estado_juego['celda_seleccionada']
+        fila_base = (fila_sel // 3) * 3
+        columna_base = (columna_sel // 3) * 3
+    
     for i in range(9):
         for j in range(9):
             # Obtener el valor de la celda actual
             value = estado_juego['sudoku'][i][j]
             numero = fuente.render(str(estado_juego['sudoku'][i][j]), True, "black")
             
+<<<<<<< HEAD
             # Si está dentro de colores_celdas es porque el jugador ya tipeó un número
             # Seguirá dentro de colores_celdas hasta que lo saque 
             if (i, j) in estado_juego['colores_celdas']:
+=======
+            if estado_juego['celda_seleccionada'] == (i, j) and (i, j) not in estado_juego['celdas_bloqueadas']:
+                color = CELDA_SELECCIONADA
+            elif (i, j) in estado_juego['colores_celdas']:
+>>>>>>> upstream/main
                 color = estado_juego['colores_celdas'][(i, j)]
+            elif fila_sel is not None and (i == fila_sel or j == columna_sel):
+                color = SOMBREADO_FILA_COLUMNA
+            elif fila_base is not None and fila_base <= i < fila_base + 3 and columna_base <= j < columna_base + 3:
+                color = SOMBREADO_SUBMATRIZ
             elif (i, j) in estado_juego['celdas_bloqueadas']:
                 color = CELDA_RESUELTA
-            elif estado_juego['celda_seleccionada'] == (i, j):
-                color = CELDA_SELECCIONADA
             else:
                 color = CELDA_VACIA
 
@@ -206,6 +255,12 @@ def dibujar_temporizador(estado_juego:dict):
     Recibe: estado_juego(dict): Diccionario con todos los datos importantes del juego.
     No tiene retorno
     """
+    
+    if estado_juego['dark_mode'] == True:
+        color = BLANCO
+    elif estado_juego['dark_mode'] == False:
+        color = NEGRO
+    
     fuente = pygame.font.SysFont(None, 50)
-    texto = fuente.render(estado_juego['tiempo'], True, "white")
+    texto = fuente.render(estado_juego['tiempo'], True, color)
     estado_juego['pantalla'].blit(texto, (100, 100))

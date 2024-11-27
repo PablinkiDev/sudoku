@@ -110,7 +110,7 @@ def validar_numero_sudoku(matriz, numero, fila, columna):
 
 # ----------------------
 
-def ocultar_celdas(matriz:list[list[int]], dificultad):
+def ocultar_celdas(matriz:list[list[int]], dificultad:float = 0.2):
     """
     Esta funcion se encarga de ocultar de forma aleatoria distintos elementos de una matriz creando una copia de esta.
     Recibe: matriz[list[list[any]]]: Matriz a copiar para esconderle celdas.
@@ -119,12 +119,14 @@ def ocultar_celdas(matriz:list[list[int]], dificultad):
     """
     copia_tablero = copy.deepcopy(matriz)
     
-    if dificultad == "facil":
-        cantidad_celdas_a_ocultar = int(81 * 0.2)
-    elif dificultad == "intermedio":
-        cantidad_celdas_a_ocultar = int(81 * 0.4)
-    elif dificultad == 'dificil':
-        cantidad_celdas_a_ocultar = int(81 * 0.6)
+    cantidad_celdas_a_ocultar = int(81 * dificultad)
+    
+    # if dificultad == "facil":
+    #     cantidad_celdas_a_ocultar = int(81 * 0.2)
+    # elif dificultad == "intermedio":
+    #     cantidad_celdas_a_ocultar = int(81 * 0.4)
+    # elif dificultad == 'dificil':
+    #     cantidad_celdas_a_ocultar = int(81 * 0.6)
     
     for _ in range(cantidad_celdas_a_ocultar):
         fila = random.randint(0,8)
