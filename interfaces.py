@@ -1,7 +1,7 @@
 import pygame
 from constantes import *
-from imagenes import cargar_imagen, DICCIONARIO_IMAGENES
-from funciones import mostrar_mensaje
+from imagenes import DICCIONARIO_IMAGENES
+from funciones import mostrar_mensaje, cargar_imagen
 
 
 def dibujar_ranking(estado_juego):
@@ -102,9 +102,6 @@ def pantalla_juego(estado_juego:dict):
     No retorna nada.
     """
     fuente = pygame.font.SysFont(None, 50)
-<<<<<<< HEAD
-    estado_juego['pantalla'].blit(cargar_imagen("img\ingame.jpg"), (0, 0)) # Fondo
-=======
     
     if estado_juego['dark_mode'] == True:
         estado_juego['pantalla'].blit(cargar_imagen("img\ingame.jpg"), (0, 0))
@@ -112,7 +109,6 @@ def pantalla_juego(estado_juego:dict):
     elif estado_juego['dark_mode'] == False:
         estado_juego['pantalla'].blit(cargar_imagen("img\ingame_claro.webp"), (0, 0))
         color = NEGRO
->>>>>>> upstream/main
     errores = str(estado_juego['errores'])
     texto_puntaje = f"Score: {str(estado_juego['puntaje'])}"
     if estado_juego['puntaje'] < 0:
@@ -212,15 +208,9 @@ def dibujar_tablero(estado_juego:dict):
             value = estado_juego['sudoku'][i][j]
             numero = fuente.render(str(estado_juego['sudoku'][i][j]), True, "black")
             
-<<<<<<< HEAD
-            # Si está dentro de colores_celdas es porque el jugador ya tipeó un número
-            # Seguirá dentro de colores_celdas hasta que lo saque 
-            if (i, j) in estado_juego['colores_celdas']:
-=======
             if estado_juego['celda_seleccionada'] == (i, j) and (i, j) not in estado_juego['celdas_bloqueadas']:
                 color = CELDA_SELECCIONADA
             elif (i, j) in estado_juego['colores_celdas']:
->>>>>>> upstream/main
                 color = estado_juego['colores_celdas'][(i, j)]
             elif fila_sel is not None and (i == fila_sel or j == columna_sel):
                 color = SOMBREADO_FILA_COLUMNA

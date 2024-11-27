@@ -4,6 +4,17 @@ import json
 from constantes import *
 from logica_sudoku import *
 
+def cargar_imagen(ruta:str, dimensiones:int|None = None):
+    """
+    Esta funcion se encarga de cargar una imagen.
+    Recibe: ruta del archivo. Dimensiones que queramos darle opcionalmente.
+    Retorna: La imagen cargada con pygame.
+    """
+    imagen = pygame.image.load(ruta)
+    if dimensiones != None:
+        imagen = pygame.transform.scale(imagen, dimensiones)
+    return imagen
+
 def validar_colisiones_menu(evento, opciones, estado):
     """
     Esta funcion se encarga de validar las colisiones de los botonees del menu. Cuando se pulse un boton cambia el estado del juego.
@@ -170,9 +181,6 @@ def calcular_dificultad(estado_juego):
         
     return estado_juego['puntaje'] * dificultad
 
-
-
-
 def ordenar_ranking(lista_ranking):
     for i in range(len(lista_ranking) - 1):
         for j in range(i + 1, len(lista_ranking)):
@@ -185,8 +193,6 @@ def leer_json(ruta):
     with open(ruta, "r") as archivo:
         data = json.load(archivo)
     return data
-
-
 
 def escribir_json(ruta, estado_juego):
     data_user = {
@@ -201,7 +207,6 @@ def escribir_json(ruta, estado_juego):
     with open(ruta, "w") as archivo:
         json.dump(estado_juego['ranking'], archivo, indent=4)
         
-
 def agregar_usuario(ranking:list, data_user):
     se_encontro_user = False
     for i in range(len(ranking)):
