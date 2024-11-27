@@ -6,16 +6,16 @@
         "errores": 0
     },
     {
-        "user": "Player",
-        "points": 1053.0,
-        "minutos": 2,
-        "errores": 1
-    },
-    {
         "user": "Aguschan",
         "points": 1276.0,
         "minutos": 2,
         "errores": 0
+    },
+    {
+        "user": "Player",
+        "points": 541.0,
+        "minutos": 0,
+        "errores": 77
     },
     {
         "user": "Pro",

@@ -1,18 +1,5 @@
 import pygame
-
-def cargar_imagen(ruta:str, dimensiones:int|None = None):
-    """
-    Esta funcion se encarga de cargar una imagen.
-    Recibe: ruta(str): Directorio de la imagen.
-            dimensiones(int|None): Dimensiones a la que se va escalar la imagen.
-            Por defecto es None.
-    Retorna: La imagen cargada con pygame.
-    """
-    imagen = pygame.image.load(ruta)
-    if dimensiones != None:
-        imagen = pygame.transform.scale(imagen, dimensiones)
-    return imagen
-    
+from funciones import *
 
 reset = cargar_imagen("img/reset.webp", (80, 80))
 volver = cargar_imagen("img/volver.png", (80, 80))

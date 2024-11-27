@@ -77,24 +77,30 @@ def validar_numero_sudoku(matriz, numero, fila, columna):
     """
     valido = True 
     
+    # Verificar numero en fila
     for i in range(9):
         if matriz[fila][i] == numero:
             valido = False
             break  
     
+    # Verificar numero en columna
     if valido:  
         for j in range(9):
             if matriz[j][columna] == numero:
                 valido = False
                 break
     
+    # Verificar numero en subcuadricula
     if valido:  
-        subcuadricula_fila_inicio = (fila // 3) * 3
-        subcuadrícula_columna_inicio = (columna // 3) * 3
+        # filas y columnas de los numeros que inician las subcuadriculas
+                                    # 0, 1, 2
+        subcuadricula_fila_inicio = (fila // 3) * 3          # 0, 3, 6
+                                        # 0, 1, 2
+        subcuadricula_columna_inicio = (columna // 3) * 3    # 0, 3, 6
         
         for i in range(3):
             for j in range(3):
-                if matriz[subcuadricula_fila_inicio + i][subcuadrícula_columna_inicio + j] == numero:
+                if matriz[subcuadricula_fila_inicio + i][subcuadricula_columna_inicio + j] == numero:
                     valido = False
                     break
             if not valido:  

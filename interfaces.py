@@ -1,7 +1,7 @@
 import pygame
 from constantes import *
-from imagenes import cargar_imagen, DICCIONARIO_IMAGENES
-from funciones import mostrar_mensaje
+from imagenes import DICCIONARIO_IMAGENES
+from funciones import mostrar_mensaje, cargar_imagen
 
 
 def dibujar_ranking(estado_juego):

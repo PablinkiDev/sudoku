@@ -18,14 +18,15 @@ OPCIONES_CONFIG = [
     {"btn": 3, "texto": f"Modo oscuro: {DARK_MODE[0]}", "posicion": (520, 600)}
 ]
 
-
+# Coordenadas y dimensiones del tablero: (x:400, y:100, w:545, h:545)
 LINEAS_TABLERO = [
-    (580, 102, 580, 640),
-    (760, 103, 760, 640),
-    (403, 280, 940, 280),
-    (403, 460, 940, 460),
+    # x    y    W    H
+    (580, 102, 580, 640),   # Primera Linea vertical
+    (760, 103, 760, 640),   # Segunda linea vertical
+    (403, 280, 940, 280),   # Primera linea horizontal
+    (403, 460, 940, 460),   # Segunda linea horizontal
 ]
-    #(400, 100, 450, 450)
+
 
 # BOTONES MENU
 ANCHO_BOTON = 300
